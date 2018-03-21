@@ -8,7 +8,7 @@ class SortInfo extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             sort:{value:'bookname', label:'Bookname'},
-            order:{value:'descend', label:'Descend'},
+            order:{value:'ascend', label:'Ascend'},
         }
     }
     handleSortChange = (newValue) => {

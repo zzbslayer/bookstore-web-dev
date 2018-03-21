@@ -21,7 +21,7 @@ class BookTable extends React.Component{
         this.state={
             books:data,
             searchCondition:{},
-            sortInfo:{sort:"bookname",order:"descend"},
+            sortInfo:{sort:"bookname",order:"ascend"},
             num:8
         }
     }
@@ -35,7 +35,7 @@ class BookTable extends React.Component{
         this.setState({searchCondition: condition})
     }
 
-    quickSortDescend = (arr, attr) =>{
+    quickSortAscend = (arr, attr) =>{
         if(arr.length<=1){return arr;}
         let pivotIndex = Math.floor(arr.length / 2);
         let pivot = arr.splice(pivotIndex,1)[0];
@@ -50,14 +50,14 @@ class BookTable extends React.Component{
                 right.push(arr[i]);
             }
         }
-        return this.quickSortDescend(left, attr).concat([pivot],this.quickSortDescend(right, attr));
+        return this.quickSortAscend(left, attr).concat([pivot],this.quickSortAscend(right, attr));
     }
 
     quickSort = (arr, attr, order) => {
-        if (order === 'descend')
-            return this.quickSortDescend(arr,attr);
-        else if (order === 'ascend')
-            return this.quickSortDescend(arr, attr).reverse();
+        if (order === 'ascend')
+            return this.quickSortAscend(arr,attr);
+        else if (order === 'descend')
+            return this.quickSortAscend(arr, attr).reverse();
         console.log("Wrong order : "+order);
         return null;
     }
