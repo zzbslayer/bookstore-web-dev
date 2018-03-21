@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, Input } from 'mdbreact';
 
 class Book extends React.Component{
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         this.state={
             edit:false,
             valid:false,
@@ -43,6 +44,7 @@ class Book extends React.Component{
 
     handleDelete = () => {
         this.props.deleteBook(this.props.id);
+        console.log("id:"+this.props.id)
     }
 
     handleEdit = () => {
@@ -54,7 +56,7 @@ class Book extends React.Component{
         this.setState({[e.target.name]:e.target.value, valid:this.state.bookname&&this.state.author&&this.state.language&&this.state.price&&this.state.year})
     }
 
-    handleCancle = () =>{
+    handleCancel = () =>{
         this.setState({bookname:this.state.old_bookname, author:this.state.old_author, language:this.state.old_language, price:this.state.old_price, year:this.state.old_year})
         this.setState({edit:false});
     }
@@ -68,8 +70,8 @@ class Book extends React.Component{
         let bookname = this.state.bookname;
         let author = this.state.author;
         let language = this.state.language;
-        let price = this.fmoney(this.state.price);
-        let year = this.state.year;
+        let price = String(this.fmoney(this.state.price));
+        let year = String(this.state.year);
         let edit = this.state.edit;
         if (!edit){
             return(
@@ -80,10 +82,10 @@ class Book extends React.Component{
                     <td className = 'price'>￥{price}</td>
                     <td className = 'year'>{year}</td>
                     <td className = 'action'>
-                        <Button bsStyle="primary" onClick = {this.handleEdit}>Edit</Button>
+                        <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
                     </td>
                     <td className = 'action'>
-                        <Button bsStyle="danger" onClick = {this.handleDelete}>Delete</Button>
+                        <Button color="danger" onClick = {this.handleDelete}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
                     </td>
                 </tr>
             )
@@ -91,44 +93,27 @@ class Book extends React.Component{
         else{
             return(
                 <tr>
-                    <Form>
                     <td>
-                    <FormGroup controlId="formInlineBookname">
-                    {' '}
-                    <FormControl type="text" defaultValue={bookname} placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
-                    </FormGroup>
+                    <Input type="text" defaultValue={bookname} placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
                     </td> 
                     <td>
-                    <FormGroup controlId="formInlineAuthor">
-                    {' '}
-                    <FormControl type="text" defaultValue={author} placeholder="Author" name="author" onChange={this.handleChange}/>
-                    </FormGroup>
+                    <Input type="text" defaultValue={author} placeholder="Author" name="author" onChange={this.handleChange}/>
                     </td> 
                     <td>
-                    <FormGroup controlId="formInlineLanguage">
-                    {' '}
-                    <FormControl type="text" defaultValue={language} placeholder="Language" name="language" onChange={this.handleChange}/>
-                    </FormGroup>
+                    <Input type="text" defaultValue={language} placeholder="Language" name="language" onChange={this.handleChange}/>
                     </td> 
                     <td>
-                    <FormGroup controlId="formInlinePrice">
-                    {' '}
-                    <FormControl type="number" defaultValue={price} placeholder="Price" name="price" onChange={this.handleChange}/>
-                    </FormGroup>
+                    <Input type="number" defaultValue={price} placeholder="Price" name="price" onChange={this.handleChange}/>
                     </td> 
                     <td>
-                    <FormGroup controlId="formInlineYear">
-                    {' '}
-                    <FormControl type="number" defaultValue={year} placeholder="Year" name="year" onChange={this.handleChange}/>
-                    </FormGroup>
+                    <Input type="number" defaultValue={year} placeholder="Year" name="year" onChange={this.handleChange}/>
                     </td> 
                     <td className = 'action'>
-                        <Button bsStyle="primary" onClick = {this.handleSubmit}>Submit</Button>
+                        <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i class="fa fa-check" aria-hidden="true"></i></Button>
                     </td>
                     <td className = 'action'>
-                        <Button bsStyle="primary" onClick = {this.handleCancel}>Cancel</Button>
+                        <Button color="primary" onClick = {this.handleCancel}>Cancel&nbsp;<i class="fa fa-remove" aria-hidden="true"></i></Button>
                     </td>
-                    </Form>
                 </tr>
             )
         }

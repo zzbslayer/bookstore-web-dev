@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Input } from 'mdbreact';
 
 class BookForm extends React.Component{
     constructor(props){
@@ -10,7 +10,7 @@ class BookForm extends React.Component{
             bookname:'',
             author:'',
             language:'',
-            price:0,
+            price:'',
             year:''
         }
     }
@@ -34,35 +34,48 @@ class BookForm extends React.Component{
     }
 
     render(){
+        let bookname = this.state.bookname;
+        let author = this.state.author;
+        let language = this.state.language;
+        let price = String(this.state.price);
+        let year = String(this.state.year);
         return (
-            <Form inline>
-                <FormGroup controlId="formInlineBookname">
-                    <ControlLabel>Bookname</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineAuthor">
-                    <ControlLabel>Author</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Author" name="author" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineLanguage">
-                    <ControlLabel>Language</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Language" name="language" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlinePrice">
-                    <ControlLabel>Price</ControlLabel>
-                    {' '}
-                    <FormControl type="number" placeholder="Amount" name="price" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineYear">
-                    <ControlLabel>Year</ControlLabel>
-                    {' '}
-                    <FormControl type="number" placeholder="Year" name="year" onChange={this.handleChange}/>
-                </FormGroup>
-                <Button type="submit" onClick={this.handleSubmit}>Add</Button>
-            </Form>
+            <div className="BookForm" style={{height:50}}>
+            <table>
+            <tbody>
+                <tr>
+                    <td>
+                    <div style={{width:200}}>
+                    <Input type="text" defaultValue={bookname} label="Bookname" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="text" defaultValue={author} label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="text" defaultValue={language} label="Language" placeholder="Language" name="language" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="number" defaultValue={price} label="Price" placeholder="Price" name="price" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="number" defaultValue={year} label="Year" placeholder="Year" name="year" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <Button color="primary" type="submit" onClick={this.handleSubmit}>Add</Button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
         )
     }
 }
