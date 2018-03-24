@@ -2,8 +2,13 @@ import React from 'react';
 import BookTable from './BookTable'
 import MyNavBar from './NavBar.js'
 
-
 class BookStore extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            permission:"admin",
+        }
+    }
     render(){
         return (
             <div className="BookStore">

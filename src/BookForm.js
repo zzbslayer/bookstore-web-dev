@@ -40,7 +40,8 @@ class BookForm extends React.Component{
         let price = String(this.state.price);
         let year = String(this.state.year);
         return (
-            <div className="BookForm" style={{height:50}}>
+            <div className="BookForm">
+            <h2>Add Books</h2>
             <table>
             <tbody>
                 <tr>

@@ -3,6 +3,7 @@ import Book from './Book'
 import BookForm from './BookForm'
 import SearchBar from './SearchBar'
 import SortInfo from './SortInfo'
+import ExportData from './ExportData'
 
 let data = [
     {id:0, bookname:"Watashi ga Motenai no wa Dō Kangaete mo Omaera ga Warui", author:"Nico Tanigawa", language:"Japanese", price:34.30, year:2013},
@@ -10,29 +11,64 @@ let data = [
     {id:2, bookname:"Wiedźmin", author:"Andrzej Sapkowski", language:"Polish", price:196.00, year:1993},
     {id:3, bookname:"Ore no Kanojo to Osananajimi ga Shyuraba Sugiru", author:"Yūji Yūji", language:"Japanese", price:55.60, year:2011},
     {id:4, bookname:"The Devil is a Part-Timer!", author:"Satoshi Wagahara", language:"Japanese", price:71.00, year:2011},
-    {id:5, bookname:"Overlord", author:"Satoshi Ōshio", language:"Janpanese", price:74.00, year:2012},
-    {id:6, bookname:"A Certain Magical Index", author:"Kazuma Kamachi", language:"Janpanese", price:30.00, year:2004},
-    {id:7, bookname:"A Certain Scientific Railgun", author:"Kazuma Kamachi", language:"Janpanese", price:30.00, year:2007}
+    {id:5, bookname:"Overlord", author:"Satoshi Ōshio", language:"Japanese", price:74.00, year:2012},
+    {id:6, bookname:"A Certain Magical Index", author:"Kazuma Kamachi", language:"Japanese", price:30.00, year:2004},
+    {id:7, bookname:"A Certain Scientific Railgun", author:"Kazuma Kamachi", language:"Japanese", price:30.00, year:2007}
 ]
+
+let result = []
 
 class BookTable extends React.Component{
     constructor(props){
         super(props);
         this.state={
             books:data,
-            searchCondition:{},
             sortInfo:{sort:"bookname",order:"ascend"},
             num:8
         }
     }
 
     sortBooks = (sortInfo) => {
-        console.log(sortInfo)
         this.setState({sortInfo:sortInfo})
+        if (sortInfo.sort && sortInfo.order){
+            result = this.quickSort(this.state.books, sortInfo.sort, sortInfo.order);
+            this.setState({books:result})
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("Update:")
+        console.log(nextState.books)
+        console.log(this.state.books)
+        console.log(nextState.books !== this.state.books)
+        console.log((nextProps.id !== this.props.id)||(nextState.books !== this.state.books))
+        return ((nextProps.id !== this.props.id)||(nextState.books !== this.state.books));
     }
 
     searchBook = (condition) => {
-        this.setState({searchCondition: condition})
+        result = []
+        console.log(condition)
+        console.log(data)
+        for (let i in data){
+            let book = data[i]
+            console.log(book)
+            console.log(book.bookname.includes(condition.bookname))
+            console.log(book.author.includes(condition.author))
+            console.log(book.language.includes(condition.language))
+            if (book.bookname.toLowerCase().includes(condition.bookname.toLowerCase()) && book.author.toLowerCase().includes(condition.author.toLowerCase()) && book.language.toLowerCase().includes(condition.language.toLowerCase()))
+                result.push(book)
+        }
+        console.log("before setState")
+        console.log("searchResult:")
+        console.log(result)
+        console.log("state:")
+        console.log(this.state.books)
+
+        this.setState({books:result})
+
+        console.log("after setState")
+        console.log("state:")
+        console.log(this.state.books)
     }
 
     quickSortAscend = (arr, attr) =>{
@@ -78,28 +114,13 @@ class BookTable extends React.Component{
     }
 
     render(){
-        let books = data;
+        let books = this.state.books;
         let num = this.state.num;
-        let sortInfo = this.state.sortInfo;
-        if (sortInfo.sort && sortInfo.order){
-            books = this.quickSort(books, sortInfo.sort, sortInfo.order);
-            data = books;
-        }
 
         return (
             <div className="BookTable">
             <div className="Functionality Bar">
             <table>
-            <thead>
-                <tr>
-                    <td>
-                        <h2>Add a Book</h2>
-                    </td>
-                    <td>
-                        <h2>Sort Books</h2>
-                    </td>
-                </tr>
-            </thead>
             <tbody>
                 <tr>
                     <td>
@@ -108,6 +129,14 @@ class BookTable extends React.Component{
                     <td>
                         <SortInfo sortBooks={this.sortBooks}/>
                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        <SearchBar searchBook={this.searchBook}/>  
+                    </td> 
+                    <td>
+                        <ExportData data={data}/>
+                    </td> 
                 </tr>
             </tbody>
             </table>

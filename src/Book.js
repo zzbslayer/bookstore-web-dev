@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Input } from 'mdbreact';
+import Alert from 'react-s-alert';
 
 class Book extends React.Component{
     constructor(props){
@@ -8,7 +9,6 @@ class Book extends React.Component{
         this.handleCancel = this.handleCancel.bind(this);
         this.state={
             edit:false,
-            valid:false,
             id:this.props.num,
 
             bookname:this.props.book.bookname,
@@ -26,7 +26,7 @@ class Book extends React.Component{
     }
     shouldComponentUpdate(nextProps, nextState) {
         return ((nextProps.id !== this.props.id)||(nextState.edit !== this.state.edit));
-      }
+    }
 
     fmoney(s, n=2){
         if(s==='')
@@ -53,7 +53,7 @@ class Book extends React.Component{
     }
 
     handleChange = (e) =>{
-        this.setState({[e.target.name]:e.target.value, valid:this.state.bookname&&this.state.author&&this.state.language&&this.state.price&&this.state.year})
+        this.setState({[e.target.name]:e.target.value,})
     }
 
     handleCancel = () =>{
@@ -61,9 +61,22 @@ class Book extends React.Component{
         this.setState({edit:false});
     }
 
+    handleError = () => {
+        console.log("wuwuwu")
+        Alert.error('Test message error!', {
+          position: 'bottom-left'
+        });
+      }
+
     handleSubmit = (e) =>{
         e.preventDefault();
-        this.setState({edit:false});
+        if (this.state.bookname!=="" && this.state.author!=="" && this.state.language!=="" && this.state.price!=="" && this.state.year!=="" )
+            this.setState({edit:false});
+        else{
+            const link = document.createElement("a")
+            link.onClick = this.handleError()
+            link.click()
+        }
     }
 
     render(){
@@ -76,11 +89,11 @@ class Book extends React.Component{
         if (!edit){
             return(
                 <tr>
-                    <td className = 'bookname'>{bookname}</td>
-                    <td className = 'author'>{author}</td>
-                    <td className = 'language'>{language}</td>
-                    <td className = 'price'>￥{price}</td>
-                    <td className = 'year'>{year}</td>
+                    <td className = 'bookname align-middle'>{bookname}</td>
+                    <td className = 'author align-middle'>{author}</td>
+                    <td className = 'language align-middle'>{language}</td>
+                    <td className = 'price align-middle'>￥{price}</td>
+                    <td className = 'year align-middle'>{year}</td>
                     <td className = 'action'>
                         <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
                     </td>
@@ -109,10 +122,10 @@ class Book extends React.Component{
                     <Input type="number" defaultValue={year} placeholder="Year" name="year" onChange={this.handleChange}/>
                     </td> 
                     <td className = 'action'>
-                        <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i class="fa fa-check" aria-hidden="true"></i></Button>
+                        <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i className="fa fa-check" aria-hidden="true"></i></Button>
                     </td>
                     <td className = 'action'>
-                        <Button color="primary" onClick = {this.handleCancel}>Cancel&nbsp;<i class="fa fa-remove" aria-hidden="true"></i></Button>
+                        <Button color="primary" onClick = {this.handleCancel}>Cancel&nbsp;<i className="fa fa-remove" aria-hidden="true"></i></Button>
                     </td>
                 </tr>
             )

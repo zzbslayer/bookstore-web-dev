@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Button, Input } from 'mdbreact';
 
 class SearchBar extends React.Component{
     constructor(props){
@@ -12,62 +12,52 @@ class SearchBar extends React.Component{
             price:'',
             startYear:'',
             endYear:'',
-            valid:false
         }
     }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]:e.target.value, valid:this.state.bookname&&this.state.author&&this.state.language&&this.state.price&&this.state.year})
+        this.setState({[e.target.name]:e.target.value})
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let book = {
-            key: this.props.num,
+        let condition = {
             bookname: this.state.bookname,
             author: this.state.author,
             language: this.state.language,
-            price: this.state.price,
-            startYear: this.state.startYear,
-            endYear: this.state.endYear
         }
-        this.props.searchBook(book)
+        console.log(condition)
+        this.props.searchBook(condition)
     }
     render(){
         return (
-            <Form inline>
-                <FormGroup controlId="formInlineBookname">
-                    <ControlLabel>Bookname</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineAuthor">
-                    <ControlLabel>Author</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Author" name="author" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineLanguage">
-                    <ControlLabel>Language</ControlLabel>
-                    {' '}
-                    <FormControl type="text" placeholder="Language" name="language" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlinePrice">
-                    <ControlLabel>Price</ControlLabel>
-                    {' '}
-                    <FormControl type="number" placeholder="Amount" name="amount" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineYear">
-                    <ControlLabel>Start Year</ControlLabel>
-                    {' '}
-                    <FormControl type="number" placeholder="Start year" name="startYear" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="formInlineYear">
-                    <ControlLabel>End Year</ControlLabel>
-                    {' '}
-                    <FormControl type="number" placeholder="End year" name="endYear" onChange={this.handleChange}/>
-                </FormGroup>
-                <Button type="submit" onClick={this.handleSubmit}>Search</Button>
-            </Form>
+            <div className="SearchBar">
+            <h2>Search Books</h2>
+            <table>
+            <tbody>
+                <tr>
+                    <td>
+                    <div style={{width:200}}>
+                    <Input type="text" label="Bookname" placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="text" label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:130}}>
+                    <Input type="text" label="Language" placeholder="Language" name="language" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <Button color="primary" type="submit" onClick={this.handleSubmit}>Search</Button>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
         )
     }
 }

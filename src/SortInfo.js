@@ -29,10 +29,11 @@ class SortInfo extends React.Component{
         const order = this.state.order
         return (
             <div className="SortInfo">
+            <h2>Sort Books</h2>
             <table>
             <tbody>
                 <tr>
-                    <td className="align-bottom">
+                    <td>
                         <div style={{width:130}}>
                         <Select 
                             name="sort" 
@@ -52,7 +53,7 @@ class SortInfo extends React.Component{
                         />
                         </div>
                     </td>
-                    <td className="align-bottom">
+                    <td>
                         <div style={{width:130}}>
                         <Select 
                             name="order" 
@@ -69,7 +70,7 @@ class SortInfo extends React.Component{
                         />
                         </div>
                     </td>
-                    <td className="align-bottom">
+                    <td>
                         <Button color='primary' onClick={this.handleSubmit}>Sort</Button>
                     </td>
                 </tr>
