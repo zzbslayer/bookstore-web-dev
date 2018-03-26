@@ -36,39 +36,14 @@ class BookTable extends React.Component{
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log("Update:")
-        console.log(nextState.books)
-        console.log(this.state.books)
-        console.log(nextState.books !== this.state.books)
-        console.log((nextProps.id !== this.props.id)||(nextState.books !== this.state.books))
-        return ((nextProps.id !== this.props.id)||(nextState.books !== this.state.books));
-    }
-
     searchBook = (condition) => {
         result = []
-        console.log(condition)
-        console.log(data)
         for (let i in data){
             let book = data[i]
-            console.log(book)
-            console.log(book.bookname.includes(condition.bookname))
-            console.log(book.author.includes(condition.author))
-            console.log(book.language.includes(condition.language))
             if (book.bookname.toLowerCase().includes(condition.bookname.toLowerCase()) && book.author.toLowerCase().includes(condition.author.toLowerCase()) && book.language.toLowerCase().includes(condition.language.toLowerCase()))
                 result.push(book)
         }
-        console.log("before setState")
-        console.log("searchResult:")
-        console.log(result)
-        console.log("state:")
-        console.log(this.state.books)
-
         this.setState({books:result})
-
-        console.log("after setState")
-        console.log("state:")
-        console.log(this.state.books)
     }
 
     quickSortAscend = (arr, attr) =>{
@@ -110,13 +85,20 @@ class BookTable extends React.Component{
                 break;
             }
         }
-        this.setState({books:data});
+        let currentBooks = this.state.books;
+        for (let i in currentBooks){
+            if (currentBooks[i].id===id){
+                currentBooks.splice(i,1);
+                break;
+            }
+        }
+        this.setState({books:currentBooks});
     }
 
     render(){
         let books = this.state.books;
         let num = this.state.num;
-
+        console.log("render:"+books)
         return (
             <div className="BookTable">
             <div className="Functionality Bar">
