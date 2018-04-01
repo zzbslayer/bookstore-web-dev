@@ -22,7 +22,7 @@ class Cart extends Component {
         }
     }
 
-    fmoney(s, n=2){
+    fmoney = (s, n=2) => {
         if(s==='')
            return;
         n = n > 0 && n <= 20 ? n : 2;   
