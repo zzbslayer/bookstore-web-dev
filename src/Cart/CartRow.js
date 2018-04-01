@@ -88,7 +88,7 @@ class CartRow extends Component{
                 {this.state.amount}
             </td>
             <td>
-                <div>
+                <div style={{width:150}}>
                 <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
                 </div>
             </td>
@@ -98,7 +98,9 @@ class CartRow extends Component{
                 </div>
             </td>
             <td>
+                <div style={{width:147}}>
                 <Button color="danger" onClick = {this.handleDelete}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
+                </div>
             </td>
             </tr>
             );
@@ -123,12 +125,14 @@ class CartRow extends Component{
                 </div>
             </td>
             <td>
-                <div>
+                <div style={{width:50}}>
                 <Input type="number" defaultValue={String(this.state.amount)} placeholder="Amount" name="amount" onChange={this.handleChange}/>
                 </div>
             </td>
             <td>
+            <div style={{width:150}}>
                 <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i className="fa fa-check" aria-hidden="true"></i></Button>
+                </div>
             </td>
             <td>
                 <div className="bold price">
@@ -136,7 +140,9 @@ class CartRow extends Component{
                 </div>
             </td>
             <td>
+                <div style={{width:147}}>
                 <Button color="danger" onClick = {this.handleDelete}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
+                </div>
             </td>
             </tr>
             );

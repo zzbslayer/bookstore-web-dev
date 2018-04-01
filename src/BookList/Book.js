@@ -10,6 +10,15 @@ class Book extends Component{
             bookname:this.props.bookname,
         }
     }
+
+    cutBookname = (bookname) => {
+        if (bookname.length>35){
+            let cutname = bookname.substring(0,35) + '...'
+            return cutname
+        }
+        return bookname
+    }
+
     render(){
         return(
             <div class="item float-left" style={{height:300,width:250}}>
@@ -18,7 +27,7 @@ class Book extends Component{
                 </div>
                 <div class="description float-left">
                     <div>
-                        <a class="bookname" href={this.state.detail}>{this.state.bookname}</a>
+                        <a class="bookname" href={this.state.detail}>{this.cutBookname(this.state.bookname)}</a>
                     </div>
                     <div>
                         <span class="symbol">￥</span><span class="price">{this.state.price}</span>

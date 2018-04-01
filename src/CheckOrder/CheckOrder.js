@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import AddressRow from './AddressRow'
+import { Button } from 'mdbreact'
 
 let addresses = [
     {id:0, address:"Shanghai Minghang District Shanghai Jiao Tong University Dormitory X13",recipient:"Jiansi Wang",phone:"18011111111",select:true},
@@ -15,24 +16,24 @@ class CheckOrder extends Component {
     }
 
     addressSelect = (id) =>{
+        console.log(addresses)
         for (let i in addresses){
-            if (addresses[i].id!==id && addresses[i].select===true){
+            if (addresses[i].id!==id){
                 addresses[i].select = false
             }
-            else if (addresses[i].id===id){
+            else{
                 addresses[i].select = true
             }
         }
         console.log(addresses)
-        console.log(this.state.addresses)
         this.setState({addresses:addresses})
     }
 
     render(){
-        let data = this.state.addresses
+        let data = addresses
         return(
             <div className="big-container">
-            <div><span className="float-left">Confirm Order Infomation</span><span className="float-right">Add New Address</span></div>
+            <h4><span className="float-left">Confirm Order Infomation</span><span className="float-right">Add New Address</span></h4>
             
             <div>
             <table className="table table-striped table-sm inside-big-container">
@@ -56,6 +57,7 @@ class CheckOrder extends Component {
                 }
                 </tbody>
             </table>
+            <Button color="deep-orange">Confirm</Button>
             </div>
             </div>
         );

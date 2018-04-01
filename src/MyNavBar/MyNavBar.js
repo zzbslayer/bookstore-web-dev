@@ -11,8 +11,17 @@ class MyNavBar extends Component{
             collapse: false,
             isWideEnough: false,
             dropdownOpen: false,
+
+            dropdownOpen2: false,
         }
     }
+    
+    toggle2 = () => {
+        this.setState({
+            dropdownOpen2: !this.state.dropdownOpen2
+        });
+    }
+
     onClick = () => {
         this.setState({
             collapse: !this.state.collapse,
@@ -97,10 +106,16 @@ class MyNavBar extends Component{
                         </NavItem>
                         </NavbarNav>
                         <NavbarNav right>
-                        <NavItem>
-                            <NavLink className="nav-link" to="/admin">Backstage</NavLink>
+                        <NavItem style={{width:110}}>
+                            <Dropdown isOpen={this.state.dropdownOpen2} toggle={this.toggle2}>
+                            <DropdownToggle nav caret>Backstage</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem href="/booktable">Booktable</DropdownItem>
+                                <DropdownItem href="/usermanagement">UserManagement</DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
                         </NavItem>
-                        <NavItem style={{width:95}}>
+                        <NavItem style={{width:100}}>
                             <NavLink className="nav-link" to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>My Cart</NavLink>
                         </NavItem>
                         <NavItem style={{width:120}}>

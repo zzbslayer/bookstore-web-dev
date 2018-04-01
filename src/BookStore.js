@@ -9,6 +9,7 @@ import BookDetail from './BookList/BookDetail'
 import MyNavBar from './MyNavBar/MyNavBar'
 import Cart from './Cart/Cart'
 import CheckOrder from './CheckOrder/CheckOrder'
+import Usermanagement from './Admin/UserManagement'
 
 class BookStore extends React.Component{
     constructor(props){
@@ -40,10 +41,11 @@ class BookStore extends React.Component{
                 <div>
                 <MyNavBar login={this.state.login} permission={this.state.permission} account={this.state.account}/>
             <Route exact path="/books" component={BookList}/>
-            <Route path="/books/0" component={BookDetail}/>
+            <Route path="/books/:id" component={BookDetail}/>
             <Route path="/register" component={Register}/>
             <Route path="/login" component={Login}/>
-            <Route path="/admin" component={BookTable}/>
+            <Route path="/booktable" component={BookTable}/>
+            <Route path="/usermanagement" component={Usermanagement}/>
             <Route path="/buy" component={CheckOrder}/>
             <Route exact path="/" component={Home}/>
             <Route path="/cart" component={Cart}/>

@@ -86,14 +86,7 @@ class BookTable extends React.Component{
                 break;
             }
         }
-        let currentBooks = this.state.books;
-        for (let i in currentBooks){
-            if (currentBooks[i].id===id){
-                currentBooks.splice(i,1);
-                break;
-            }
-        }
-        this.setState({books:currentBooks});
+        this.setState({books:data});
     }
 
     render(){

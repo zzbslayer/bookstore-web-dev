@@ -84,10 +84,14 @@ class BookRow extends React.Component{
                     <td className = 'price-row align-middle'>￥{price}</td>
                     <td className = 'year-row align-middle'>{year}</td>
                     <td className = 'action-row'>
+                        <div style={{width:150}}>
                         <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
+                        </div>
                     </td>
                     <td className = 'action-row'>
+                        <div style={{width:150}}>
                         <Button color="danger" onClick = {this.handleDelete}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
+                        </div>
                     </td>
                 </tr>
             )
@@ -102,19 +106,29 @@ class BookRow extends React.Component{
                     <Input type="text" defaultValue={author} placeholder="Author" name="author" onChange={this.handleChange}/>
                     </td> 
                     <td>
+                    <div style={{width:80}}>
                     <Input type="text" defaultValue={language} placeholder="Language" name="language" onChange={this.handleChange}/>
+                    </div>
                     </td> 
                     <td>
+                    <div style={{width:80}}>
                     <Input type="number" defaultValue={price} placeholder="Price" name="price" onChange={this.handleChange}/>
+                    </div>
                     </td> 
                     <td>
+                    <div style={{width:50}}>
                     <Input type="number" defaultValue={year} placeholder="Year" name="year" onChange={this.handleChange}/>
+                    </div>
                     </td> 
                     <td className = 'action'>
+                        <div style={{width:150}}>
                         <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i className="fa fa-check" aria-hidden="true"></i></Button>
+                        </div>
                     </td>
                     <td className = 'action'>
+                        <div style={{width:150}}>
                         <Button color="primary" onClick = {this.handleCancel}>Cancel&nbsp;<i className="fa fa-remove" aria-hidden="true"></i></Button>
+                        </div>
                     </td>
                 </tr>
             )

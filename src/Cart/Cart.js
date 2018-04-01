@@ -56,21 +56,19 @@ class Cart extends Component {
         this.setState({books:data})
     }
 
-    deleteBook = (id) => {
+    deleteOneBook = (id) => {
         for (let i in data){
             if (data[i].id===id){
                 data.splice(i,1);
                 break;
             }
         }
-        let currentBooks = this.state.books;
-        for (let i in currentBooks){
-            if (currentBooks[i].id===id){
-                currentBooks.splice(i,1);
-                break;
-            }
-        }
-        this.setState({books:currentBooks});
+        this.setState({books:data});
+    }
+
+    deleteBook = (id) => {
+        this.deleteOneBook(id);
+        this.setState({books:data});
     }
 
     getSum = () => {
@@ -95,10 +93,15 @@ class Cart extends Component {
     }
 
     deleteSelect = () =>{
+        let temp=[]
         for (let i in data){
-            let book = data[i]
-            if (book.select)
-                data.splice(i,1);
+            if (data[i].select){
+                temp.push(data[i].id)
+            }
+        }
+        for (let j in temp){
+            console.log(temp[j])
+            this.deleteOneBook(temp[j])
         }
         this.setState({books:data})
     }
