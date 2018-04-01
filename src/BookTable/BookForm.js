@@ -4,8 +4,6 @@ import { Button, Input } from 'mdbreact';
 class BookForm extends React.Component{
     constructor(props){
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             bookname:'',
             author:'',
@@ -15,11 +13,11 @@ class BookForm extends React.Component{
         }
     }
 
-    handleChange(e){
-        this.setState({[e.target.name]:e.target.value, valid:this.state.bookname&&this.state.author&&this.state.language&&this.state.price&&this.state.year})
+    handleChange = (e) => {
+        this.setState({[e.target.name]:e.target.value})
     }
 
-    handleSubmit(e){
+    handleSubmit = (e) => {
         e.preventDefault();
         let book = {
             id: this.props.num,
@@ -61,12 +59,12 @@ class BookForm extends React.Component{
                     </div>
                     </td>
                     <td>
-                    <div style={{width:130}}>
+                    <div style={{width:100}}>
                     <Input type="number" defaultValue={price} label="Price" placeholder="Price" name="price" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:130}}>
+                    <div style={{width:100}}>
                     <Input type="number" defaultValue={year} label="Year" placeholder="Year" name="year" onChange={this.handleChange}/>
                     </div>
                     </td>

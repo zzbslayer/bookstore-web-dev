@@ -1,26 +1,29 @@
 import React from 'react';
 import { Button } from 'mdbreact';
 import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class SortInfo extends React.Component{
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            sort:{value:'bookname', label:'Bookname'},
-            order:{value:'ascend', label:'Ascend'},
+            sort:'bookname',
+            order:'ascend',
         }
     }
     handleSortChange = (newValue) => {
         this.setState({sort:newValue})
+        console.log(this.state.sort)
     }
 
     handleOrderChange = (newValue) => {
         this.setState({order:newValue})
+        console.log(this.state.order)
     }
 
     handleSubmit(e){
-        let sortInfo = {sort:this.state.sort.value, order:this.state.order.value}
+        let sortInfo = {sort:this.state.sort, order:this.state.order}
         this.props.sortBooks(sortInfo)
     }
 

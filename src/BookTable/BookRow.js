@@ -1,12 +1,9 @@
 import React from 'react';
 import { Button, Input } from 'mdbreact';
-import Alert from 'react-s-alert';
 
-class Book extends React.Component{
+class BookRow extends React.Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
         this.state={
             edit:false,
             id:this.props.num,
@@ -44,7 +41,6 @@ class Book extends React.Component{
 
     handleDelete = () => {
         this.props.deleteBook(this.props.id);
-        console.log("id:"+this.props.id)
     }
 
     handleEdit = () => {
@@ -53,7 +49,7 @@ class Book extends React.Component{
     }
 
     handleChange = (e) =>{
-        this.setState({[e.target.name]:e.target.value,})
+        this.setState({[e.target.name]:e.target.value})
     }
 
     handleCancel = () =>{
@@ -61,20 +57,13 @@ class Book extends React.Component{
         this.setState({edit:false});
     }
 
-    handleError = () => {
-        console.log("wuwuwu")
-        Alert.error('Test message error!', {
-          position: 'bottom-left'
-        });
-      }
-
     handleSubmit = (e) =>{
         e.preventDefault();
         if (this.state.bookname!=="" && this.state.author!=="" && this.state.language!=="" && this.state.price!=="" && this.state.year!=="" )
             this.setState({edit:false});
         else{
             const link = document.createElement("a")
-            link.onClick = this.handleError()
+            //link.onClick = this.handleError()
             link.click()
         }
     }
@@ -89,15 +78,15 @@ class Book extends React.Component{
         if (!edit){
             return(
                 <tr>
-                    <td className = 'bookname align-middle'>{bookname}</td>
-                    <td className = 'author align-middle'>{author}</td>
-                    <td className = 'language align-middle'>{language}</td>
-                    <td className = 'price align-middle'>￥{price}</td>
-                    <td className = 'year align-middle'>{year}</td>
-                    <td className = 'action'>
+                    <td className = 'bookname-row align-middle'>{bookname}</td>
+                    <td className = 'author-row align-middle'>{author}</td>
+                    <td className = 'language-row align-middle'>{language}</td>
+                    <td className = 'price-row align-middle'>￥{price}</td>
+                    <td className = 'year-row align-middle'>{year}</td>
+                    <td className = 'action-row'>
                         <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
                     </td>
-                    <td className = 'action'>
+                    <td className = 'action-row'>
                         <Button color="danger" onClick = {this.handleDelete}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
                     </td>
                 </tr>
@@ -132,4 +121,4 @@ class Book extends React.Component{
         }
     }
 }
-export default Book
+export default BookRow

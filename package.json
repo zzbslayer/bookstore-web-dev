@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.3.0",
-    "antd": "^3.3.1",
     "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
@@ -15,9 +14,11 @@
     "react-bootstrap-inputs": "0.0.2",
     "react-dom": "^16.2.0",
     "react-error-overlay": "^4.0.0",
-    "react-s-alert": "^1.4.1",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "react-select": "^2.0.0-alpha.8"
+    "react-select": "^1.2.1",
+    "react-stickky": "^3.0.2",
+    "react-sticky": "^6.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,14 +1,15 @@
 import React from 'react';
-import Book from './Book'
+import BookRow from './BookRow'
 import BookForm from './BookForm'
 import SearchBar from './SearchBar'
 import SortInfo from './SortInfo'
 import ExportData from './ExportData'
+import Icon from '../Icon';
 
 let data = [
-    {id:0, bookname:"Watashi ga Motenai no wa Dō Kangaete mo Omaera ga Warui", author:"Nico Tanigawa", language:"Japanese", price:34.30, year:2013},
+    {id:0, bookname:"Wiedźmin", author:"Andrzej Sapkowski", language:"Polish", price:196.00, year:1993},
     {id:1, bookname:"Inu to Hasami wa Tsukaiyō", author:"Shunsuke Sarai Tetsuhiro Nabeshima", language:"Japanese", price:21.30, year:2011},
-    {id:2, bookname:"Wiedźmin", author:"Andrzej Sapkowski", language:"Polish", price:196.00, year:1993},
+    {id:2, bookname:"Watashi ga Motenai no wa Dō Kangaete mo Omaera ga Warui", author:"Nico Tanigawa", language:"Japanese", price:34.30, year:2013},
     {id:3, bookname:"Ore no Kanojo to Osananajimi ga Shyuraba Sugiru", author:"Yūji Yūji", language:"Japanese", price:55.60, year:2011},
     {id:4, bookname:"The Devil is a Part-Timer!", author:"Satoshi Wagahara", language:"Japanese", price:71.00, year:2011},
     {id:5, bookname:"Overlord", author:"Satoshi Ōshio", language:"Japanese", price:74.00, year:2012},
@@ -100,7 +101,8 @@ class BookTable extends React.Component{
         let num = this.state.num;
         console.log("render:"+books)
         return (
-            <div className="BookTable">
+            <div className="big-container">
+            <Icon/>
             <div className="Functionality Bar">
             <table>
             <tbody>
@@ -142,7 +144,7 @@ class BookTable extends React.Component{
             <tbody>
                 {
                     books.map( (book) => {
-                        return <Book key={book.id} id={book.id} book={book} deleteBook={this.deleteBook}/>
+                        return <BookRow key={book.id} id={book.id} book={book} deleteBook={this.deleteBook}/>
                     },this
                 )
                 }
