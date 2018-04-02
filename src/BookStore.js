@@ -11,6 +11,7 @@ import Cart from './Cart/Cart'
 import CheckOrder from './CheckOrder/CheckOrder'
 import Usermanagement from './Admin/UserManagement'
 import Order from './Order/Order'
+import Profile from './Profile/Profile'
 
 class BookStore extends React.Component{
     constructor(props){
@@ -46,6 +47,7 @@ class BookStore extends React.Component{
             <Route path="/register" component={Register}/>
             <Route path="/login" component={Login}/>
             <Route path="/order" component={Order}/>
+            <Route path="/profile" component={Profile}/>
             <Route path="/booktable" component={BookTable}/>
             <Route path="/usermanagement" component={Usermanagement}/>
             <Route path="/buy" component={CheckOrder}/>
