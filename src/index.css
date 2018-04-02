@@ -40,6 +40,11 @@ body {
   border-color: grey;
 }
 
+.border-solid {
+  border-style: solid;
+  border-color: cornflowerblue;
+}
+
 .big-container {
   margin: auto;
   padding: 10px;
@@ -117,4 +122,21 @@ body {
 .small-img{
   width:80px;
   height:80px;
+}
+
+.photo{
+  width:150px;
+  height:150px;
+}
+
+.big-font{
+  font-size:x-large
+}
+
+.top-margin{
+  margin-top: 10px;
+}
+
+.to-the-bottom{
+  margin-bottom: 5px;
 }

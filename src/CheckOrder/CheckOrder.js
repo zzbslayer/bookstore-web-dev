@@ -16,7 +16,6 @@ class CheckOrder extends Component {
     }
 
     addressSelect = (id) =>{
-        console.log(addresses)
         for (let i in addresses){
             if (addresses[i].id!==id){
                 addresses[i].select = false
@@ -25,7 +24,6 @@ class CheckOrder extends Component {
                 addresses[i].select = true
             }
         }
-        console.log(addresses)
         this.setState({addresses:addresses})
     }
 
