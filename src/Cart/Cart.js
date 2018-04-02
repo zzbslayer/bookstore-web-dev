@@ -115,9 +115,9 @@ class Cart extends Component {
                 <Sticky className="stickyStyle" stickyWidth="1100px">
                             <div className="floatingbar">
                             <div className="float-left center bold">
-                                <Button color="danger" onClick = {this.deleteSelect}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
+                                <Button size="sm" color="danger" onClick = {this.deleteSelect}>Delete&nbsp;<i className="fa fa-trash" aria-hidden="true"></i></Button>
                             &nbsp;&nbsp;
-                                <Button color="cyan" onClick = {this.handleShare}>Share&nbsp;<i class="fa fa-share-alt" aria-hidden="true"></i></Button>
+                                <Button size="sm" color="cyan" onClick = {this.handleShare}>Share&nbsp;<i class="fa fa-share-alt" aria-hidden="true"></i></Button>
                             </div>
 
                             <div className="float-right center bold">
