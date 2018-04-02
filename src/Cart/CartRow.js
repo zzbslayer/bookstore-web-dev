@@ -72,7 +72,7 @@ class CartRow extends Component{
                 <input type="checkbox" checked={this.state.select} onChange={this.handleSelect}/>
             </td>
             <td>
-                <img src={this.state.imgsrc} alt="imgsrc" style={{width:80, height:80}}/>
+                <img src={this.state.imgsrc} alt="imgsrc" className="small-img"/>
             </td>
             <td>
                 <div className="bold">
@@ -112,7 +112,7 @@ class CartRow extends Component{
                 <input type="checkbox" checked={this.state.select} onChange={this.handleSelect}/>
             </td>
             <td>
-                <img src={this.state.imgsrc} alt="imgsrc" style={{width:80, height:80}}/>
+                <img src={this.state.imgsrc} alt="imgsrc" className="small-img"/>
             </td>
             <td>
                 <div className="bold">

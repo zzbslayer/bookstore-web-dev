@@ -113,3 +113,8 @@ body {
   display: flex;
   top: 0px;
 }
+
+.small-img{
+  width:80px;
+  height:80px;
+}

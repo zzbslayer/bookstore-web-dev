@@ -13,7 +13,14 @@ class MyNavBar extends Component{
             dropdownOpen: false,
 
             dropdownOpen2: false,
+            dropdownOpen3: false,
         }
+    }
+
+    toggle3 = () => {
+        this.setState({
+            dropdownOpen3: !this.state.dropdownOpen3
+        });
     }
     
     toggle2 = () => {
@@ -115,11 +122,15 @@ class MyNavBar extends Component{
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
-                        <NavItem style={{width:100}}>
-                            <NavLink className="nav-link" to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>My Cart</NavLink>
-                        </NavItem>
                         <NavItem style={{width:120}}>
-                            <NavLink className="nav-link" to="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>{this.state.account}</NavLink>
+                            <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
+                            <DropdownToggle nav caret>{this.state.account}</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
+                                <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
+                                <DropdownItem href="/order"><i class="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
                         </NavItem>
                         <NavItem style={{width:95}}>
                             <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>
@@ -160,11 +171,15 @@ class MyNavBar extends Component{
                         </NavItem>
                         </NavbarNav>
                         <NavbarNav right>
-                        <NavItem style={{width:95}}>
-                            <NavLink className="nav-link" to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>My Cart</NavLink>
-                        </NavItem>
                         <NavItem style={{width:120}}>
-                            <NavLink className="nav-link" to="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>{this.state.account}</NavLink>
+                            <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
+                            <DropdownToggle nav caret>{this.state.account}</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
+                                <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
+                                <DropdownItem href="/order"><i class="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
                         </NavItem>
                         <NavItem style={{width:95}}>
                             <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>

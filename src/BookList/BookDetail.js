@@ -50,7 +50,6 @@ class BookDetail extends Component{
         let book = this.getBook(id)
         let price = "￥" + book.price
         let count = book.count
-        let nextSize = 80
         let imgsrc = book.imgsrc
         let href = book.href
         let bookname = book.bookname
@@ -128,36 +127,36 @@ class BookDetail extends Component{
                                     <tr>
                                         <td>
                                         <div class="photo">
-                                            <a href={newbooks[0].href}><img style={{width:nextSize,height:nextSize}} src={newbooks[0].imgsrc} alt={newbooks[0].bookname}/></a>
+                                            <a href={newbooks[0].href}><img className="small-img" src={newbooks[0].imgsrc} alt={newbooks[0].bookname}/></a>
                                         </div>
                                         <div align="center">
-                                            <span class="price-small">{newbooks[0].price}</span>
+                                            <span class="price-small">￥{newbooks[0].price}</span>
                                         </div>
                                         </td>
                                         <td>
                                         <div class="photo">
-                                            <a href={newbooks[1].href}><img style={{width:nextSize,height:nextSize}} src={newbooks[1].imgsrc} alt={newbooks[1].bookname}/></a>
+                                            <a href={newbooks[1].href}><img className="small-img" src={newbooks[1].imgsrc} alt={newbooks[1].bookname}/></a>
                                         </div>
                                         <div align="center">
-                                            <span class="price-small">{newbooks[1].price}</span>
+                                            <span class="price-small">￥{newbooks[1].price}</span>
                                         </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                         <div class="photo">
-                                            <a href={newbooks[2].href}><img style={{width:nextSize,height:nextSize}} src={newbooks[2].imgsrc} alt={newbooks[2].bookname}/></a>
+                                            <a href={newbooks[2].href}><img className="small-img" src={newbooks[2].imgsrc} alt={newbooks[2].bookname}/></a>
                                         </div>
                                         <div align="center">
-                                            <span class="price-small">{newbooks[2].price}</span>
+                                            <span class="price-small">￥{newbooks[2].price}</span>
                                         </div>
                                         </td>
                                         <td>
                                         <div class="photo">
-                                            <a href={newbooks[3].href}><img style={{width:nextSize,height:nextSize}} src={newbooks[3].imgsrc} alt={newbooks[3].bookname}/></a>
+                                            <a href={newbooks[3].href}><img className="small-img" src={newbooks[3].imgsrc} alt={newbooks[3].bookname}/></a>
                                         </div>
                                         <div align="center">
-                                            <span class="price-small">{newbooks[3].price}</span>
+                                            <span class="price-small">￥{newbooks[3].price}</span>
                                         </div>
                                         </td>
                                     </tr>
