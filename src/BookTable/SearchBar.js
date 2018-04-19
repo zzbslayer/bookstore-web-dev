@@ -37,12 +37,12 @@ class SearchBar extends React.Component{
             <tbody>
                 <tr>
                     <td>
-                    <div style={{width:200}}>
+                    <div style={{width:150}}>
                     <Input type="text" label="Bookname" placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:130}}>
+                    <div style={{width:100}}>
                     <Input type="text" label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
                     </div>
                     </td>

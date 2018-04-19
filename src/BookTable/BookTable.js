@@ -6,28 +6,43 @@ import SortInfo from './SortInfo'
 import ExportData from './ExportData'
 import Icon from '../Icon';
 
-let data = [
-    {id:0, bookname:"Wiedźmin", author:"Andrzej Sapkowski", language:"Polish", price:196.00, year:1993},
-    {id:1, bookname:"Inu to Hasami wa Tsukaiyō", author:"Shunsuke Sarai Tetsuhiro Nabeshima", language:"Japanese", price:21.30, year:2011},
-    {id:2, bookname:"Watashi ga Motenai no wa Dō Kangaete mo Omaera ga Warui", author:"Nico Tanigawa", language:"Japanese", price:34.30, year:2013},
-    {id:3, bookname:"Ore no Kanojo to Osananajimi ga Shyuraba Sugiru", author:"Yūji Yūji", language:"Japanese", price:55.60, year:2011},
-    {id:4, bookname:"The Devil is a Part-Timer!", author:"Satoshi Wagahara", language:"Japanese", price:71.00, year:2011},
-    {id:5, bookname:"Overlord", author:"Satoshi Ōshio", language:"Japanese", price:74.00, year:2012},
-    {id:6, bookname:"A Certain Magical Index", author:"Kazuma Kamachi", language:"Japanese", price:30.00, year:2004},
-    {id:7, bookname:"A Certain Scientific Railgun", author:"Kazuma Kamachi", language:"Japanese", price:30.00, year:2007}
-]
-
 let result = []
 
 class BookTable extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            books:data,
+            books:[],
             sortInfo:{sort:"bookname",order:"ascend"},
             num:8
         }
     }
+
+    componentDidMount = () => {
+        fetch("http://localhost:8080/api/books",{
+            credentials: 'include',
+            method:'get'
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            this.setState({
+                isLoaded: true,
+                books: result
+            });
+            console.log(result)
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+            }
+        )
+      }
 
     sortBooks = (sortInfo) => {
         this.setState({sortInfo:sortInfo})
@@ -39,6 +54,7 @@ class BookTable extends React.Component{
 
     searchBook = (condition) => {
         result = []
+        let data = this.state.books
         for (let i in data){
             let book = data[i]
             if (book.bookname.toLowerCase().includes(condition.bookname.toLowerCase()) && book.author.toLowerCase().includes(condition.author.toLowerCase()) && book.language.toLowerCase().includes(condition.language.toLowerCase()))
@@ -74,12 +90,14 @@ class BookTable extends React.Component{
         return null;
     }
 
+    /*
     addBook = (book) => {
         data.push(book);
         this.setState({books:data, num:this.state.num+1});
-    }
+    }*/
 
     deleteBook = (id) => {
+        let data = this.state.books
         for (let i in data){
             if (data[i].id===id){
                 data.splice(i,1);
@@ -112,7 +130,7 @@ class BookTable extends React.Component{
                         <SearchBar searchBook={this.searchBook}/>  
                     </td> 
                     <td>
-                        <ExportData data={data}/>
+                        <ExportData data={books}/>
                     </td> 
                 </tr>
             </tbody>

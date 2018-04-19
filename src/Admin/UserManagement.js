@@ -1,14 +1,41 @@
 import React, {Component} from 'react'
 import UserRow from './UserRow'
 
-let data=[
-    {username:"zzbslayer",status:"normal"},
-    {username:"dd",status:"normal"},
-    {username:"Evan Song",status:"ban"},
-]
-
 class UserManagement extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            error:null,
+            isLoaded: false,
+            userstatus: []
+        }
+    }
+
+    componentDidMount = () => {
+        fetch("http://localhost:8080/api/userstatus",{
+            credentials: 'include',
+            method:'get'
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            this.setState({
+                isLoaded: true,
+                userstatus: result
+            });
+            console.log(result)
+        },
+        (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+            console.log(error)
+            }
+        )
+    }
     render(){
+        let data = this.state.userstatus
         return(
             <div className="big-container">
             <table className="table table-striped table-sm inside-big-container">
@@ -24,7 +51,7 @@ class UserManagement extends Component{
                     {
                         data.map((user) => {
                             return(
-                                <UserRow username={user.username} status={user.status}/>
+                                <UserRow  username={user.username} status={user.user_status}/>
                             );
                         },this)
                     }

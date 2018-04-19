@@ -44,12 +44,12 @@ class BookForm extends React.Component{
             <tbody>
                 <tr>
                     <td>
-                    <div style={{width:200}}>
+                    <div style={{width:150}}>
                     <Input type="text" defaultValue={bookname} label="Bookname" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:130}}>
+                    <div style={{width:100}}>
                     <Input type="text" defaultValue={author} label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
                     </div>
                     </td>

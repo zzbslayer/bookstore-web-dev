@@ -23,6 +23,7 @@ class SortInfo extends React.Component{
     }
 
     handleSubmit(e){
+        e.preventDefault();
         let sortInfo = {sort:this.state.sort, order:this.state.order}
         this.props.sortBooks(sortInfo)
     }

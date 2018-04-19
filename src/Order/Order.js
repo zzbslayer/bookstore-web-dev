@@ -9,8 +9,8 @@ let data = [
 class Order extends Component {
     render(){
         return(
-            <div className="big-container">
-            <table className="table table-striped table-sm inside-big-container">
+            <div className="big-container border-solid top-margin">
+            <table className="table table-striped table-sm" style={{width:1070}}>
                 <thead>
                     <tr>
                     <td>Bookname</td>

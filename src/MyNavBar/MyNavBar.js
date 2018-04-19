@@ -4,10 +4,8 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 class MyNavBar extends Component{
     constructor(props){
         super(props)
+        this.handleLogout = this.props.handleLogout
         this.state = {
-            account: this.props.account,
-            login: this.props.login,
-            permission: this.props.permission,
             collapse: false,
             isWideEnough: false,
             dropdownOpen: false,
@@ -15,6 +13,10 @@ class MyNavBar extends Component{
             dropdownOpen2: false,
             dropdownOpen3: false,
         }
+    }
+
+    logout = () => {
+        this.handleLogout()
     }
 
     toggle3 = () => {
@@ -41,7 +43,10 @@ class MyNavBar extends Component{
         });
     }
     render(){
-        if (this.state.login===false){
+        let login = this.props.login
+        let username = this.props.username
+        let role = this.props.role
+        if (login === 'null' || typeof login === 'undefined'){
             return(
                 <div>
                 <Navbar color="indigo" dark expand="md" scrolling>
@@ -83,7 +88,7 @@ class MyNavBar extends Component{
                 </div>
             );
         }
-        else if (this.state.permission==="admin"){
+        else if (role.includes('ROLE_ADMIN')){
             return(
                 <div>
                 <Navbar color="indigo" dark expand="md" scrolling>
@@ -124,11 +129,12 @@ class MyNavBar extends Component{
                         </NavItem>
                         <NavItem style={{width:120}}>
                             <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
-                            <DropdownToggle nav caret>{this.state.account}</DropdownToggle>
+                            <DropdownToggle nav caret>{username}</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
                                 <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
-                                <DropdownItem href="/order"><i class="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                <DropdownItem href="#" onClick={this.logout}><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -173,11 +179,12 @@ class MyNavBar extends Component{
                         <NavbarNav right>
                         <NavItem style={{width:120}}>
                             <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
-                            <DropdownToggle nav caret>{this.state.account}</DropdownToggle>
+                            <DropdownToggle nav caret>{username}</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
                                 <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
-                                <DropdownItem href="/order"><i class="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                <DropdownItem onClick={this.logout}><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>

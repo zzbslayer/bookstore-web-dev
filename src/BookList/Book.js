@@ -21,16 +21,16 @@ class Book extends Component{
 
     render(){
         return(
-            <div class="item float-left" style={{height:300,width:250}}>
-                <div class="photo float-left">
+            <div className="item float-left" style={{height:300,width:250}}>
+                <div className="bookimg-padding float-left">
                     <a href={this.state.href}><img style={{width:200,height:200}} src={this.state.imgsrc} alt={this.state.bookname}/></a>
                 </div>
-                <div class="description float-left">
+                <div className="description float-left">
                     <div>
-                        <a class="bookname" href={this.state.detail}>{this.cutBookname(this.state.bookname)}</a>
+                        <a className="bookname" href={this.state.detail}>{this.cutBookname(this.state.bookname)}</a>
                     </div>
                     <div>
-                        <span class="symbol">￥</span><span class="price">{this.state.price}</span>
+                        <span className="symbol">￥</span><span className="price">{this.state.price}</span>
                     </div>
                 </div>
             </div>

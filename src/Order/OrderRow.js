@@ -20,13 +20,13 @@ class OrderRow extends Component {
         let sum = this.fmoney(this.props.price * 100  * this.props.amount /100)
         return(
             <tr>
-                <td><div><img src={this.props.imgsrc} className="small-img" alt={this.props.bookname}/></div></td>
-                <td><div style={{width:150}}>{this.props.bookname}</div></td>
-                <td><div style={{width:200}}>{this.props.address}</div></td>
+                <td><div style={{width:80}}><img src={this.props.imgsrc} className="small-img" alt={this.props.bookname}/></div></td>
+                <td><div style={{width:120}}>{this.props.bookname}</div></td>
+                <td><div style={{width:180}}>{this.props.address}</div></td>
                 <td><div>{this.props.recipient}</div></td>
                 <td><div>{this.props.phone}</div></td>
                 <td><div>￥{this.props.price}*{this.props.amount}=￥{sum}</div></td>
-                <td><Button color="primary">Action</Button></td>
+                <td><div><Button color="primary" size="sm">Action</Button></div></td>
             </tr>
         );
     }
