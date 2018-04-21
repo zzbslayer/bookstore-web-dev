@@ -137,11 +137,11 @@ class BookStore extends React.Component{
             <Router>
             <div>
             <MyNavBar login={login} role={role} username={username} handleLogout={this.handleLogout}/>
-
+            <Route exact path="/bookid/:id" component={BookDetail}/>
             <Route exact path="/books" component={BookList}/>
-            <Route exact path="/books/search/:msg" component={BookList}/>
 
-            <Route exact path="/books/:id" component={BookDetail}/>
+            <Route exact path="/books/:action/:msg" component={BookList}/>
+
 
             <Route exact path="/register" component={Register}/>
             <Route exact path="/login" render={ (props) => <Login handleLogin={this.handleLogin} {...props}/> }/>

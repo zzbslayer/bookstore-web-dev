@@ -20,8 +20,14 @@ class BookDetail extends Component{
     }
 
     componentWillMount = () => {
-        this.getBook(this.props.match.params.id)
-        this.getBookImage(this.props.match.params.id)
+        this.initBook()
+    }
+
+    initBook = () => {
+        let id = this.props.match.params.id
+        console.log(id)
+        this.getBook(id)
+        this.getBookImage(id)
     }
 
     getBook = (id) => {
@@ -32,7 +38,7 @@ class BookDetail extends Component{
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("get success")
+                console.log("get book success")
                 console.log(result)
                 this.setState({book:result})
             }
@@ -47,7 +53,7 @@ class BookDetail extends Component{
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("get success")
+                console.log("get book image success")
                 console.log(result)
                 this.setState({bookimage:result})
             }
@@ -60,11 +66,8 @@ class BookDetail extends Component{
 
     render(){
         let id =this.props.match.params.id
-        console.log(id)
         let book = this.state.book
-        console.log(book)
         let bookimage = this.state.bookimage
-        console.log(bookimage)
         let price = "￥" + book.price
         let count = book.count
         let imgsrc = bookimage.imgsrc
