@@ -10,13 +10,13 @@ class BookRow extends React.Component{
 
             bookname:this.props.book.bookname,
             author:this.props.book.author,
-            language:this.props.book.language,
+            lang:this.props.book.lang,
             price:this.props.book.price,
             year:this.props.book.year,
 
             old_bookname:this.props.book.bookname,
             old_author:this.props.book.author,
-            old_language:this.props.book.language,
+            old_lang:this.props.book.lang,
             old_price:this.props.book.price,
             old_year:this.props.book.year
         }
@@ -44,7 +44,7 @@ class BookRow extends React.Component{
     }
 
     handleEdit = () => {
-        this.setState({old_bookname:this.state.bookname, old_author:this.state.author, old_language:this.state.author, old_price:this.state.price, old_year:this.state.year})
+        this.setState({old_bookname:this.state.bookname, old_author:this.state.author, old_lang:this.state.author, old_price:this.state.price, old_year:this.state.year})
         this.setState({edit:true});
     }
 
@@ -53,13 +53,13 @@ class BookRow extends React.Component{
     }
 
     handleCancel = () =>{
-        this.setState({bookname:this.state.old_bookname, author:this.state.old_author, language:this.state.old_language, price:this.state.old_price, year:this.state.old_year})
+        this.setState({bookname:this.state.old_bookname, author:this.state.old_author, lang:this.state.old_lang, price:this.state.old_price, year:this.state.old_year})
         this.setState({edit:false});
     }
 
     handleSubmit = (e) =>{
         e.preventDefault();
-        if (this.state.bookname!=="" && this.state.author!=="" && this.state.language!=="" && this.state.price!=="" && this.state.year!=="" )
+        if (this.state.bookname!=="" && this.state.author!=="" && this.state.lang!=="" && this.state.price!=="" && this.state.year!=="" )
             this.setState({edit:false});
         else{
             const link = document.createElement("a")
@@ -71,7 +71,7 @@ class BookRow extends React.Component{
     render(){
         let bookname = this.state.bookname;
         let author = this.state.author;
-        let language = this.state.language;
+        let lang = this.state.lang;
         let price = String(this.fmoney(this.state.price));
         let year = String(this.state.year);
         let edit = this.state.edit;
@@ -80,7 +80,7 @@ class BookRow extends React.Component{
                 <tr>
                     <td className = 'bookname-row align-middle'>{bookname}</td>
                     <td className = 'author-row align-middle'>{author}</td>
-                    <td className = 'language-row align-middle'>{language}</td>
+                    <td className = 'lang-row align-middle'>{lang}</td>
                     <td className = 'price-row align-middle'>￥{price}</td>
                     <td className = 'year-row align-middle'>{year}</td>
                     <td className = 'action-row'>
@@ -107,7 +107,7 @@ class BookRow extends React.Component{
                     </td> 
                     <td>
                     <div style={{width:80}}>
-                    <Input type="text" defaultValue={language} placeholder="Language" name="language" onChange={this.handleChange}/>
+                    <Input type="text" defaultValue={lang} placeholder="Language" name="lang" onChange={this.handleChange}/>
                     </div>
                     </td> 
                     <td>

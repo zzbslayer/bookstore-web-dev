@@ -17,9 +17,17 @@ class Login extends Component {
         }
     }
 
+    
+
     handleChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
         console.log(this.state)
+    }
+
+    handleKeyDown = (e) => {
+        if (e.keyCode === 13){
+            this.handleSubmit(e)
+        }
     }
 
     handleSubmit = (e) => {
@@ -58,7 +66,7 @@ class Login extends Component {
                 <form>
                 <p className="h5 text-center mb-4">Sign in</p>
                 <Input name="username" label="Type your username" icon="envelope" onChange={this.handleChange}/>
-                <Input name="password" label="Type your password" icon="lock" group type="password" validate onChange={this.handleChange}/>
+                <Input name="password" label="Type your password" icon="lock" group type="password" validate onChange={this.handleChange} onKeyDown={this.handleKeyDown}/>
                 <div className="text-center">
                     <Button onClick={this.handleSubmit}>Login</Button>
                 </div>

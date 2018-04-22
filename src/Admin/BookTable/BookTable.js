@@ -4,13 +4,15 @@ import BookForm from './BookForm'
 import SearchBar from './SearchBar'
 import SortInfo from './SortInfo'
 import ExportData from './ExportData'
-import Icon from '../Icon';
+import Icon from '../../Icon';
 
 let result = []
 
 class BookTable extends React.Component{
     constructor(props){
-        super(props);
+        super(props)
+        
+        this.initMsg()
         this.state={
             books:[],
             sortInfo:{sort:"bookname",order:"ascend"},
@@ -18,7 +20,7 @@ class BookTable extends React.Component{
         }
     }
 
-    componentDidMount = () => {
+    initMsg =() => {
         fetch("http://localhost:8080/api/books",{
             credentials: 'include',
             method:'get'
@@ -27,7 +29,6 @@ class BookTable extends React.Component{
         .then(
         (result) => {
             this.setState({
-                isLoaded: true,
                 books: result
             });
             console.log(result)
@@ -37,17 +38,17 @@ class BookTable extends React.Component{
         // exceptions from actual bugs in components.
         (error) => {
             this.setState({
-                isLoaded: true,
                 error
             });
             }
         )
-      }
+    }
 
     sortBooks = (sortInfo) => {
         this.setState({sortInfo:sortInfo})
         if (sortInfo.sort && sortInfo.order){
             result = this.quickSort(this.state.books, sortInfo.sort, sortInfo.order);
+            console.log(result)
             this.setState({books:result})
         }
     }
@@ -107,14 +108,15 @@ class BookTable extends React.Component{
         this.setState({books:data});
     }
 
-    render(){
+    render = () => {
         let books = this.state.books;
         let num = this.state.num;
-        console.log("render:"+books)
+        console.log("render:")
+        console.log(books)
         return (
             <div className="big-container">
             <Icon/>
-            <div className="Functionality Bar">
+            <div className="FunctionalityBar">
             <table>
             <tbody>
                 <tr>
@@ -155,7 +157,7 @@ class BookTable extends React.Component{
             <tbody>
                 {
                     books.map( (book) => {
-                        return <BookRow key={book.id} id={book.id} book={book} deleteBook={this.deleteBook}/>
+                        return <BookRow key={book.bookid} id={book.bookid} book={book} deleteBook={this.deleteBook}/>
                     },this
                 )
                 }

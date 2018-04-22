@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact'
 
+let categories = ["Action","Comedy","Fantasy","Harem","Kuuki Kei"]
+
 class MyNavBar extends Component{
     constructor(props){
         super(props)
@@ -66,11 +68,11 @@ class MyNavBar extends Component{
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle nav caret>Category</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/books/campous">Campous</DropdownItem>
-                                <DropdownItem href="/books/love">Love</DropdownItem>
-                                <DropdownItem href="/books/history">History</DropdownItem>
-                                <DropdownItem href="/books/horor">Horor</DropdownItem>
-                                <DropdownItem href="/books/scientific">Scientific</DropdownItem>
+                                {
+                                    categories.map((cate,index)=>{
+                                        return <DropdownItem key={index} href={"/books/category/"+cate}>{cate}</DropdownItem>
+                                    })
+                                }
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -108,11 +110,11 @@ class MyNavBar extends Component{
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle nav caret>Category</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/books/campous">Campous</DropdownItem>
-                                <DropdownItem href="/books/love">Love</DropdownItem>
-                                <DropdownItem href="/books/history">History</DropdownItem>
-                                <DropdownItem href="/books/horor">Horor</DropdownItem>
-                                <DropdownItem href="/books/scientific">Scientific</DropdownItem>
+                                {
+                                    categories.map((cate,index)=>{
+                                        return <DropdownItem key={index} href={"/books/category/"+cate}>{cate}</DropdownItem>
+                                    })
+                                }
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -134,7 +136,7 @@ class MyNavBar extends Component{
                                 <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
                                 <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
                                 <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
-                                <DropdownItem href="#" onClick={this.logout}><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
+                                <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -167,11 +169,11 @@ class MyNavBar extends Component{
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle nav caret>Category</DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem href="/books/campous">Campous</DropdownItem>
-                                <DropdownItem href="/books/love">Love</DropdownItem>
-                                <DropdownItem href="/books/history">History</DropdownItem>
-                                <DropdownItem href="/books/horor">Horor</DropdownItem>
-                                <DropdownItem href="/books/scientific">Scientific</DropdownItem>
+                                {
+                                    categories.map((cate,index)=>{
+                                        return <DropdownItem key={index} href={"/books/category/"+cate}>{cate}</DropdownItem>
+                                    })
+                                }
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -184,7 +186,7 @@ class MyNavBar extends Component{
                                 <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
                                 <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
                                 <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
-                                <DropdownItem onClick={this.logout}><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
+                                <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
                             </DropdownMenu>
                             </Dropdown>
                         </NavItem>

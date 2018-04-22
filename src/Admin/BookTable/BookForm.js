@@ -5,11 +5,11 @@ class BookForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            bookname:'',
-            author:'',
-            language:'',
-            price:'',
-            year:''
+            bookname:null,
+            author:null,
+            language:null,
+            price:null,
+            year:null
         }
     }
 
@@ -31,7 +31,7 @@ class BookForm extends React.Component{
         this.props.addBook(book)
     }
 
-    render(){
+    render = () => {
         let bookname = this.state.bookname;
         let author = this.state.author;
         let language = this.state.language;

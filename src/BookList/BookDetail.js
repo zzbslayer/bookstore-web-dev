@@ -15,7 +15,6 @@ class BookDetail extends Component{
         super(props)
         this.state={
             book:[],
-            bookimage:[]
         }
     }
 
@@ -26,11 +25,10 @@ class BookDetail extends Component{
     initBook = () => {
         let id = this.props.match.params.id
         console.log(id)
-        this.getBook(id)
-        this.getBookImage(id)
+        this.fetchBook(id)
     }
 
-    getBook = (id) => {
+    fetchBook = (id) => {
         fetch("http://localhost:8080/api/books/bookid/" + id,{
             credentials: 'include',
             method: 'get',
@@ -45,21 +43,6 @@ class BookDetail extends Component{
         )
     }
 
-    getBookImage = (id) => {
-        fetch("http://localhost:8080/api/bookimages/bookid/" + id,{
-            credentials: 'include',
-            method: 'get',
-        })
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log("get book image success")
-                console.log(result)
-                this.setState({bookimage:result})
-            }
-        )
-    }
-
     handleChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
     }
@@ -67,10 +50,9 @@ class BookDetail extends Component{
     render(){
         let id =this.props.match.params.id
         let book = this.state.book
-        let bookimage = this.state.bookimage
         let price = "￥" + book.price
         let count = book.count
-        let imgsrc = bookimage.imgsrc
+        let imgsrc = book.imgsrc
         let href = "/books/"+id
         let bookname = book.bookname
         return(

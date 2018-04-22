@@ -3,7 +3,7 @@ import {Button} from 'mdbreact'
 
 class UserRow extends Component{
     render(){
-        if (this.props.status=="normal"){
+        if (this.props.status==="normal"){
             return(
                 <tr>
                 <td><div style={{width:150}}>{this.props.username}</div></td>

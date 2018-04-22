@@ -1,5 +1,5 @@
 import React from 'react'
-import BookTable from './BookTable/BookTable'
+import BookTable from './Admin/BookTable/BookTable'
 import Home from './Home/Home'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 import Login from './User/Login'
@@ -9,7 +9,7 @@ import BookDetail from './BookList/BookDetail'
 import MyNavBar from './MyNavBar/MyNavBar'
 import Cart from './Cart/Cart'
 import CheckOrder from './CheckOrder/CheckOrder'
-import Usermanagement from './Admin/UserManagement'
+import Usermanagement from './Admin/UserManagement/UserManagement'
 import Order from './Order/Order'
 import Profile from './Profile/Profile'
 import Cookies from 'universal-cookie'
@@ -21,7 +21,7 @@ const cookies = new Cookies();
 class BookStore extends React.Component{
     constructor(props){
         super(props)
-        if (cookies.get('JSESSIONID')=='null'){
+        if (cookies.get('JSESSIONID')==='null'){
             cookies.remove("login")
             cookies.remove("username")
             cookies.remove("role")
@@ -31,55 +31,8 @@ class BookStore extends React.Component{
             login: cookies.get('login'),
             role: cookies.get('role'),
             username: cookies.get('username'),
-            books: []
         }
         
-    }
-
-    fetchBooks = () => {
-        fetch("http://localhost:8080/api/books",{
-            method: 'get',
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(
-        (result) => {
-            this.setState({
-                books: result
-            });
-            console.log("Fetch books success:")
-            console.log(result)
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-            this.setState({
-                error
-            });
-            console.log("Fetch books error")
-            }
-        )
-
-
-        fetch("http://localhost:8080/api/bookimages",{
-            method: 'get',
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(
-        (result) => {
-            this.setState({
-                bookimages: result
-            });
-            console.log(result)
-        },
-        (error) => {
-            this.setState({
-                error
-            });
-        }
-      )
     }
 
     handleLogin = (username,role) => {
@@ -131,7 +84,6 @@ class BookStore extends React.Component{
         let login = this.state.login
         let role = this.state.role
         let username = this.state.username
-        let books = this.state.books
         return (
             <div className="BookStore">
             <Router>
