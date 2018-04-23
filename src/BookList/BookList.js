@@ -3,18 +3,18 @@ import Book from './Book'
 import Icon from '../Icon'
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import SearchBar from './SearchBar'
+import {proxy, categories} from '../Global'
 
 
 let bookid = []
-let categories = ["Action","Comedy","Fantasy","Harem","Kuuki Kei"]
 
 class BookList extends Component{
     constructor(props){
         super(props)
-        this.initMsg()
         this.state={
             books:null,
         }
+        this.initMsg()
     }
 
     initMsg = () => {
@@ -33,7 +33,7 @@ class BookList extends Component{
     }
 
     fetchBooksByCategory = (msg) => {
-        fetch("http://localhost:8080/api/categories/category/"+msg,{
+        fetch(proxy+"/categories/category/"+msg,{
             method: 'get',
             credentials: 'include',
         })
@@ -49,7 +49,7 @@ class BookList extends Component{
     }
 
     searchBooks = (searchInfo) => {
-        fetch("http://localhost:8080/api/books/search", {
+        fetch(proxy+"/books/search", {
             method: 'post',
             credentials: 'include',
             headers: {
@@ -71,7 +71,7 @@ class BookList extends Component{
     }
 
     fetchAllBooks = () => {
-        fetch("http://localhost:8080/api/books",{
+        fetch(proxy+"/books",{
             credentials: 'include',
             method: 'get',
         })
@@ -87,7 +87,7 @@ class BookList extends Component{
     }
 
     fetchVagueBooks = (msg) => {
-        fetch("http://localhost:8080/api/books/vague/" + msg,{
+        fetch(proxy+"/books/vague/" + msg,{
             credentials: 'include',
             method: 'get',
         })

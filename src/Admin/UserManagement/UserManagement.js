@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import UserRow from './UserRow'
+import { proxy } from '../../Global'
 
 class UserManagement extends Component{
     constructor(props){
@@ -13,7 +14,7 @@ class UserManagement extends Component{
     }
 
     initMsg = () => {
-        fetch("http://localhost:8080/api/userstatus",{
+        fetch(proxy + "/admin/userstatus",{
             credentials: 'include',
             method:'get'
         })

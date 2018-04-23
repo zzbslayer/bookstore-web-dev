@@ -13,8 +13,7 @@ import Usermanagement from './Admin/UserManagement/UserManagement'
 import Order from './Order/Order'
 import Profile from './Profile/Profile'
 import Cookies from 'universal-cookie'
-
-const proxy = "http://localhost:8080"
+import {proxy} from './Global'
 
 const cookies = new Cookies();
 
@@ -47,7 +46,7 @@ class BookStore extends React.Component{
     }
 
     handleLogout = () => {
-        fetch("http://localhost:8080/logout",{
+        fetch(proxy + "/logout",{
             credentials: 'include'
         })
         .then(res => res.json())
@@ -99,7 +98,7 @@ class BookStore extends React.Component{
             <Route exact path="/login" render={ (props) => <Login handleLogin={this.handleLogin} {...props}/> }/>
 
             <Route exact path="/order" component={Order}/>
-            <Route exact path="/profile" component={Profile}/>
+        <Route exact path="/user/:action" render={(props) => <Profile username={username} {...props}/>}/>
 
             <Route exact path="/booktable" component={BookTable}/>
             <Route exact path="/usermanagement" component={Usermanagement}/>

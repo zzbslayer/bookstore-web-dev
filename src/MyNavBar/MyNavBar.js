@@ -48,7 +48,6 @@ class MyNavBar extends Component{
         let login = this.props.login
         let username = this.props.username
         let role = this.props.role
-        if (login === 'null' || typeof login === 'undefined'){
             return(
                 <div>
                 <Navbar color="indigo" dark expand="md" scrolling>
@@ -77,128 +76,66 @@ class MyNavBar extends Component{
                             </Dropdown>
                         </NavItem>
                         </NavbarNav>
-                        <NavbarNav right>
-                        <NavItem style={{width:95}}>
+                        {
+                            (login==='null'||typeof login === 'undefined')?(
+                            <NavbarNav right>
+                            <NavItem style={{width:95}}>
                             <NavLink className="nav-link" to="/login"><i className="fa fa-sign-in" aria-hidden="true"></i>Log in</NavLink>
-                        </NavItem>
-                        <NavItem style={{width:95}}>
+                                </NavItem>
+                                <NavItem style={{width:95}}>
                             <NavLink className="nav-link" to="/register"><i className="fa fa-user-plus" aria-hidden="true"></i>Sign up</NavLink>
-                        </NavItem>
-                        </NavbarNav>
+                            </NavItem>
+                            </NavbarNav>
+                            ):
+                            (role.includes('ROLE_ADMIN')?(
+                                <NavbarNav right>
+                                <NavItem style={{width:110}}>
+                                    <Dropdown isOpen={this.state.dropdownOpen2} toggle={this.toggle2}>
+                                    <DropdownToggle nav caret>Backstage</DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem href="/booktable">Booktable</DropdownItem>
+                                        <DropdownItem href="/usermanagement">UserManagement</DropdownItem>
+                                    </DropdownMenu>
+                                    </Dropdown>
+                                </NavItem>
+                                <NavItem style={{width:120}}>
+                                    <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
+                                    <DropdownToggle nav caret>{username}</DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem href="/user/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
+                                        <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
+                                        <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                        <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
+                                    </DropdownMenu>
+                                    </Dropdown>
+                                </NavItem>
+                                <NavItem style={{width:95}}>
+                                    <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>
+                                </NavItem>
+                                </NavbarNav>
+                            ):(
+                                <NavbarNav right>
+                                    <NavItem style={{width:120}}>
+                                        <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
+                                        <DropdownToggle nav caret>{username}</DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem href="/user/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
+                                            <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
+                                            <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
+                                            <DropdownItem href="#" onClick={this.logout}><i className="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
+                                        </DropdownMenu>
+                                        </Dropdown>
+                                    </NavItem>
+                                    <NavItem style={{width:95}}>
+                                        <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>
+                                    </NavItem>
+                                    </NavbarNav>
+                            ))
+                        }
                     </Collapse>
                 </Navbar>
                 </div>
             );
-        }
-        else if (role.includes('ROLE_ADMIN')){
-            return(
-                <div>
-                <Navbar color="indigo" dark expand="md" scrolling>
-                    <NavbarBrand href="/">
-                        <strong>BookStore</strong>
-                    </NavbarBrand>
-                    { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
-                    <Collapse isOpen = { this.state.collapse } navbar>
-                        <NavbarNav className="ml-auto">
-                        <NavItem active>
-                            <NavLink className="nav-link" to="/">Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className="nav-link" to="/books">Books List</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                            <DropdownToggle nav caret>Category</DropdownToggle>
-                            <DropdownMenu>
-                                {
-                                    categories.map((cate,index)=>{
-                                        return <DropdownItem key={index} href={"/books/category/"+cate}>{cate}</DropdownItem>
-                                    })
-                                }
-                            </DropdownMenu>
-                            </Dropdown>
-                        </NavItem>
-                        </NavbarNav>
-                        <NavbarNav right>
-                        <NavItem style={{width:110}}>
-                            <Dropdown isOpen={this.state.dropdownOpen2} toggle={this.toggle2}>
-                            <DropdownToggle nav caret>Backstage</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem href="/booktable">Booktable</DropdownItem>
-                                <DropdownItem href="/usermanagement">UserManagement</DropdownItem>
-                            </DropdownMenu>
-                            </Dropdown>
-                        </NavItem>
-                        <NavItem style={{width:120}}>
-                            <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
-                            <DropdownToggle nav caret>{username}</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
-                                <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
-                                <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
-                                <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
-                            </DropdownMenu>
-                            </Dropdown>
-                        </NavItem>
-                        <NavItem style={{width:95}}>
-                            <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>
-                        </NavItem>
-                        </NavbarNav>
-                    </Collapse>
-                </Navbar>
-                </div>
-            );
-        }
-        else {
-            return(
-                <div>
-                <Navbar color="indigo" dark expand="md" scrolling>
-                    <NavbarBrand href="/">
-                        <strong>BookStore</strong>
-                    </NavbarBrand>
-                    { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
-                    <Collapse isOpen = { this.state.collapse } navbar>
-                        <NavbarNav className="ml-auto">
-                        <NavItem active>
-                            <NavLink className="nav-link" to="/">Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink className="nav-link" to="/books">Books List</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                            <DropdownToggle nav caret>Category</DropdownToggle>
-                            <DropdownMenu>
-                                {
-                                    categories.map((cate,index)=>{
-                                        return <DropdownItem key={index} href={"/books/category/"+cate}>{cate}</DropdownItem>
-                                    })
-                                }
-                            </DropdownMenu>
-                            </Dropdown>
-                        </NavItem>
-                        </NavbarNav>
-                        <NavbarNav right>
-                        <NavItem style={{width:120}}>
-                            <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
-                            <DropdownToggle nav caret>{username}</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem href="/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
-                                <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
-                                <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
-                                <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
-                            </DropdownMenu>
-                            </Dropdown>
-                        </NavItem>
-                        <NavItem style={{width:95}}>
-                            <NavLink className="nav-link" to="/setting"><i className="fa fa-gear" aria-hidden="true"></i>Setting</NavLink>
-                        </NavItem>
-                        </NavbarNav>
-                    </Collapse>
-                </Navbar>
-                </div>
-            );
-        }
     }
 }
 export default MyNavBar

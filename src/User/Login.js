@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Button, Input } from 'mdbreact'
 import Cookies from 'universal-cookie'
+import { proxy } from '../Global'
+
 
 let cookies = new Cookies()
 
@@ -34,7 +36,7 @@ class Login extends Component {
         e.preventDefault()
         let data = "username="+ encodeURIComponent(this.state.username) +"&password="+encodeURIComponent(this.state.password)
         console.log("data:"+data)
-        fetch("http://localhost:8080/login", {
+        fetch(proxy+"/login", {
             method: 'post',
             credentials: 'include',
             headers: {
@@ -46,11 +48,16 @@ class Login extends Component {
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
-            this.handleLogin(this.state.username,result["role"])
+            //eslint-disable-next-line            
+            if (result["username"]==this.state.username){
+                alert('Login Success!')
+                this.handleLogin(this.state.username,result["role"])
+            }
+            else
+                alert("Login error:\nMessage mismatched")
         },
         (error) => {
-            console.log("Login error:")
+            alert("Login error:\n"+error)
             }
         )
     }

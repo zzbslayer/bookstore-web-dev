@@ -6,12 +6,12 @@ class SearchBar extends React.Component{
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.state={
-            bookname:'',
-            author:'',
-            language:'',
-            price:'',
-            startYear:'',
-            endYear:'',
+            bookname:null,
+            author:null,
+            language:null,
+            price:null,
+            startYear:null,
+            endYear:null,
         }
     }
 

@@ -11,13 +11,6 @@ class Home extends Component {
         }
     }
 
-    componentDidMount(){
-        document.addEventListener("keydown",this.handleSearch);
-    }
-    componentWillUmount(){
-        document.removeEventListener("keydown",this.handleSearch);
-    }
-
     handleSearch = (e) => {
         if (e.keyCode === 13){
             console.log(this.state.msg)

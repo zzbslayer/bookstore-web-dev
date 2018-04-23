@@ -5,23 +5,23 @@ import SearchBar from './SearchBar'
 import SortInfo from './SortInfo'
 import ExportData from './ExportData'
 import Icon from '../../Icon';
+import { proxy } from '../../Global'
 
 let result = []
 
 class BookTable extends React.Component{
     constructor(props){
         super(props)
-        
-        this.initMsg()
         this.state={
             books:[],
             sortInfo:{sort:"bookname",order:"ascend"},
-            num:8
+            num:null
         }
+        this.initMsg()
     }
 
     initMsg =() => {
-        fetch("http://localhost:8080/api/books",{
+        fetch(proxy+"/books",{
             credentials: 'include',
             method:'get'
         })
@@ -29,13 +29,11 @@ class BookTable extends React.Component{
         .then(
         (result) => {
             this.setState({
-                books: result
+                books: result,
+                num: result.length
             });
             console.log(result)
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
             this.setState({
                 error
