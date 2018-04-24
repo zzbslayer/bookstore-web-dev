@@ -21,7 +21,7 @@ class BookTable extends React.Component{
     }
 
     initMsg =() => {
-        fetch(proxy+"/books",{
+        fetch(proxy+"/books/all",{
             credentials: 'include',
             method:'get'
         })
@@ -89,11 +89,12 @@ class BookTable extends React.Component{
         return null;
     }
 
-    /*
+    
     addBook = (book) => {
+        let data = this.state.books
         data.push(book);
         this.setState({books:data, num:this.state.num+1});
-    }*/
+    }
 
     deleteBook = (id) => {
         let data = this.state.books
@@ -154,10 +155,10 @@ class BookTable extends React.Component{
             </thead>
             <tbody>
                 {
+                    books===null?<tr/>:
                     books.map( (book) => {
-                        return <BookRow key={book.bookid} id={book.bookid} book={book} deleteBook={this.deleteBook}/>
-                    },this
-                )
+                        return <BookRow key={book.bookid} bookid={book.bookid} book={book} deleteBook={this.deleteBook}/>
+                    })
                 }
             </tbody>
             </table>

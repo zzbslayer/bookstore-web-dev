@@ -1,17 +1,21 @@
 import React, { Component} from 'react'
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import { Input, Button } from 'mdbreact'
-import { proxy } from '../Global'
+import { proxy } from '../../Global'
+import Cookies from 'universal-cookie'
+import AddressRow from './AddressRow';
+import AddressForm from './AddressForm'
+
+const cookies = new Cookies();
 
 class Profile extends Component{
     constructor(props){
         super(props)
-        if (this.props.match.params.action !="profile" && this.props.match.params.action!="address"){
-            window.location.href="/user/profile"
-        }
+        
         this.initMsg()
         this.state={
             user:null,
+            addresses:null,
 
             email:null,
             phone:null,
@@ -20,8 +24,22 @@ class Profile extends Component{
     }
 
     initMsg = () => {
+        let login = cookies.get("login")
+        if (login==='null' || login===null || typeof(login)==='undefined'){
+            window.location.href = '/login'
+            return;
+        }
+        if (this.props.match.params.action !=="profile" && this.props.match.params.action!=="address"){
+            window.location.href="/user/profile"
+            return
+        }
         let username = this.props.username
         console.log(username)
+        this.fetchProfile()
+        this.fetchAddress()
+    }
+
+    fetchProfile = () => {
         fetch(proxy+"/user/profile",{
             method: 'get',
             credentials: 'include'
@@ -44,11 +62,32 @@ class Profile extends Component{
         )
     }
 
+    fetchAddress = () => {
+        fetch(proxy+"/user/address",{
+            method: 'get',
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            console.log(result)
+            this.setState({
+                addresses: result,
+            });
+        },
+        (error) => {
+            this.setState({
+                error
+            });
+            }
+        )
+    }
+
     handleUpdate = (e) => {
         e.preventDefault();
         let data="email="+encodeURIComponent(this.state.email)+
                 "&phone="+encodeURIComponent(this.state.phone)
-        fetch(proxy+"/user/update",{
+        fetch(proxy+"/user/profile/update",{
             method: 'post',
             credentials: 'include',
             headers: {
@@ -74,26 +113,45 @@ class Profile extends Component{
         )
     }
 
+    addAddress = (addr) => {
+        let data = this.state.addresses
+        data.push(addr)
+        this.setState({addresses: data})
+    }
+
     handleChange = (e) => {
         console.log(this.state)
         this.setState({[e.target.name]:e.target.value})
     }
 
-    render(){
+    deleteAddress = (addressid) => {
+        let data = this.state.addresses
+        for (let i in data){
+            if (data[i].addressid===addressid){
+                data.splice(i,1);
+                break;
+            }
+        }
+        this.setState({addresses:data});
+    }
+
+
+    render = () => {
         let user = this.state.user
         let action = this.props.match.params.action
+        let addresses = this.state.addresses
         return(
             <div className="big-container border-solid top-margin">
             <div className="row">
                 <div className="col-2">
                 <ListGroup>
-                <ListGroupItem href="/user/profile" active>User Profile</ListGroupItem>
-                <ListGroupItem href="/user/address">Addresses</ListGroupItem>
+                <ListGroupItem href="/user/profile" active={action==='profile'}>User Profile</ListGroupItem>
+                <ListGroupItem href="/user/address" active={action==='address'}>Addresses</ListGroupItem>
                 </ListGroup>
                 </div>
                             {
-                                user==null?(<h3>No message available</h3>):(
-                                    action=="profile"?(
+                                user===null?(<h3>No message available</h3>):(
+                                    action==="profile"?(
                                         <div className="col-8 big-font">
                                         <table className="table">
                                         <tbody>
@@ -125,8 +183,30 @@ class Profile extends Component{
                                         <Button color="primary" type="submit" onClick={this.handleUpdate}>Submit</Button>
                                         </div>
                                     ):(
-                                        action=="address"?(
-                                            <div/>
+                                        action==="address"?(
+                                            <div className="col-8 big-font">
+                                            <table className="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td><span>Address</span></td>
+                                                        <td><span>Recipient</span></td>
+                                                        <td><span>Phone</span></td>
+                                                        <td>Action</td>
+                                                        <td/>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        addresses===null?(<tr><td>No address</td></tr>):(
+                                                        addresses.map((address) => {
+                                                            return <AddressRow key={address.addressid} deleteAddress={this.deleteAddress} addressid={address.addressid} address={address.shippingaddress} recipient={address.recipient} phone={address.phone}/>
+                                                        })
+                                                    )
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <AddressForm addAddress={this.addAddress}/>
+                                            </div>
                                         ):(window.location.href="/user/profile")
                                     )
                                     

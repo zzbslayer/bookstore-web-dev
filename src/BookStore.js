@@ -1,17 +1,18 @@
 import React from 'react'
-import BookTable from './Admin/BookTable/BookTable'
 import Home from './Home/Home'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
-import Login from './User/Login'
-import Register from './User/Register'
+import Login from './Login/Login'
+import Register from './Login/Register'
 import BookList from './BookList/BookList'
-import BookDetail from './BookList/BookDetail'
 import MyNavBar from './MyNavBar/MyNavBar'
-import Cart from './Cart/Cart'
 import CheckOrder from './CheckOrder/CheckOrder'
+
 import Usermanagement from './Admin/UserManagement/UserManagement'
-import Order from './Order/Order'
-import Profile from './Profile/Profile'
+import BookTable from './Admin/BookTable/BookTable'
+
+import Cart from './User/Cart/Cart'
+import Order from './User/Order/Order'
+import Profile from './User/Profile/Profile'
 import Cookies from 'universal-cookie'
 import {proxy} from './Global'
 
@@ -24,8 +25,8 @@ class BookStore extends React.Component{
             cookies.remove("login")
             cookies.remove("username")
             cookies.remove("role")
-            
         }
+
         this.state = {
             login: cookies.get('login'),
             role: cookies.get('role'),
@@ -33,6 +34,8 @@ class BookStore extends React.Component{
         }
         
     }
+
+    
 
     handleLogin = (username,role) => {
         cookies.set("login",true,{path : '/'})
@@ -57,6 +60,7 @@ class BookStore extends React.Component{
                 username: 'null',
                 role: 'null'
             });
+            cookies.remove("JSESSIONID")
             cookies.remove("login")
             cookies.remove("username")
             cookies.remove("role")
@@ -88,7 +92,6 @@ class BookStore extends React.Component{
             <Router>
             <div>
             <MyNavBar login={login} role={role} username={username} handleLogout={this.handleLogout}/>
-            <Route exact path="/bookid/:id" component={BookDetail}/>
             <Route exact path="/books" component={BookList}/>
 
             <Route exact path="/books/:action/:msg" component={BookList}/>

@@ -4,6 +4,7 @@ import Icon from '../Icon'
 import { ListGroup, ListGroupItem } from 'mdbreact'
 import SearchBar from './SearchBar'
 import {proxy, categories} from '../Global'
+import BookDetail from './BookDetail'
 
 
 let bookid = []
@@ -71,7 +72,7 @@ class BookList extends Component{
     }
 
     fetchAllBooks = () => {
-        fetch(proxy+"/books",{
+        fetch(proxy+"/books/all",{
             credentials: 'include',
             method: 'get',
         })
@@ -107,7 +108,8 @@ class BookList extends Component{
         let books = this.state.books
         let action = this.props.match.params.action
         let msg = this.props.match.params.msg
-
+        if (action==='bookid')
+            return(<BookDetail id={msg}/>)
         if (books!==null && books.length!==0){
             return(
                 <div className="booklist">
@@ -129,7 +131,7 @@ class BookList extends Component{
                         <div className="col-10">
                         {    
                             books.map( (book,index) => {
-                                return <Book key={book.bookid} id={book.bookid} href={'/bookid/'+book.bookid} bookname={book.bookname} imgsrc={book.imgsrc} price={book.price}/>
+                                return <Book key={book.bookid} id={book.bookid} href={'/books/bookid/'+book.bookid} bookname={book.bookname} imgsrc={book.imgsrc} price={book.price}/>
                             },this
                         )
                         }

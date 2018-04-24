@@ -6,8 +6,6 @@ class BookRow extends React.Component{
         super(props);
         this.state={
             edit:false,
-            id:this.props.num,
-
             bookname:this.props.book.bookname,
             author:this.props.book.author,
             lang:this.props.book.lang,
@@ -20,9 +18,6 @@ class BookRow extends React.Component{
             old_price:this.props.book.price,
             old_year:this.props.book.year
         }
-    }
-    shouldComponentUpdate(nextProps, nextState) {
-        return ((nextProps.id !== this.props.id)||(nextState.edit !== this.state.edit));
     }
 
     fmoney(s, n=2){
@@ -40,7 +35,7 @@ class BookRow extends React.Component{
     } 
 
     handleDelete = () => {
-        this.props.deleteBook(this.props.id);
+        this.props.deleteBook(this.props.bookid);
     }
 
     handleEdit = () => {
@@ -61,11 +56,7 @@ class BookRow extends React.Component{
         e.preventDefault();
         if (this.state.bookname!=="" && this.state.author!=="" && this.state.lang!=="" && this.state.price!=="" && this.state.year!=="" )
             this.setState({edit:false});
-        else{
-            const link = document.createElement("a")
-            //link.onClick = this.handleError()
-            link.click()
-        }
+        else{}
     }
 
     render(){

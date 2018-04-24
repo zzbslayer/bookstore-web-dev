@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Icon from '../Icon';
 import { Input, Button } from 'mdbreact';
-import {Link} from 'react-router-dom';
+import { proxy } from '../Global'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies();
 
 let newbooks = [
     {id:1, bookname:"Inu to Hasami wa Tsukaiyō", href:"/books/1", imgsrc:"https://images-cn.ssl-images-amazon.com/images/I/51caLYMFqhL._SX337_BO1,204,203,200_.jpg",price:21.30},
@@ -15,21 +18,19 @@ class BookDetail extends Component{
         super(props)
         this.state={
             book:[],
+            count:1,
         }
-    }
-
-    componentWillMount = () => {
         this.initBook()
     }
 
     initBook = () => {
-        let id = this.props.match.params.id
+        let id = this.props.id
         console.log(id)
         this.fetchBook(id)
     }
 
     fetchBook = (id) => {
-        fetch("http://localhost:8080/api/books/bookid/" + id,{
+        fetch(proxy + "/books/bookid/" + id,{
             credentials: 'include',
             method: 'get',
         })
@@ -47,11 +48,57 @@ class BookDetail extends Component{
         this.setState({[e.target.name]:e.target.value})
     }
 
+    addToCart = (e) => {
+        e.preventDefault();
+        let login = cookies.get("login")
+        if (login==='null' || login===null || typeof(login)==='undefined'){
+            window.location.href = '/login'
+            return;
+        }
+        let bookid = this.state.book.bookid
+        let count = this.state.count
+        let data = "bookid="+encodeURIComponent(bookid)+
+                "&count="+encodeURIComponent(count)
+
+        fetch(proxy+"/user/cart/add",{
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+              body: data
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            console.log(result)
+            alert("Add Success!")
+        },
+        (error) => {
+            alert("Add Failed.")
+            this.setState({
+                error
+            });
+            window.location.href= "/login"
+            }
+        )
+    }
+
+    handleBuy = () => {
+        let login = cookies.get("login")
+        if (login==='null' || login===null || typeof(login)==='undefined'){
+            window.location.href = '/login'
+            return;
+        }
+        window.location.href = '/buy'
+    }
+
     render(){
-        let id =this.props.match.params.id
+        let id =this.props.id
         let book = this.state.book
         let price = "￥" + book.price
-        let count = book.count
+        let count = this.state.count
         let imgsrc = book.imgsrc
         let href = "/books/"+id
         let bookname = book.bookname
@@ -105,12 +152,12 @@ class BookDetail extends Component{
                                             <tr>
                                                 <td>
                                                 <div className= "description">
-                                                    <Link to="/buy"><Button color="amber">Buy it now</Button></Link>
+                                                    <Button color="amber" onClick={this.handleBuy}>Buy it now</Button>
                                                 </div>
                                                 </td>
                                                 <td>
                                                 <div className= "description">
-                                                    <Button color="deep-orange" onClick={this.handleClickOpen}>Add to Cart</Button>
+                                                    <Button color="deep-orange" onClick={this.addToCart}>Add to Cart</Button>
                                                 </div>
                                                 </td>
                                             </tr>

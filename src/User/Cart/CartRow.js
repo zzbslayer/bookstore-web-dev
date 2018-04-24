@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Input } from 'mdbreact';
+import { proxy } from '../../Global'
 
 class CartRow extends Component{
     constructor(props){
@@ -7,6 +8,8 @@ class CartRow extends Component{
         this.changeAmount = this.props.changeAmount
         this.changeSelect = this.props.changeSelect
         this.state={
+            cartid: this.props.cartid,
+            bookid: this.props.bookid,
             href: this.props.href,
             imgsrc: this.props.imgsrc,
             bookname: this.props.bookname,
@@ -33,17 +36,17 @@ class CartRow extends Component{
 
     handleSelect = (e) => {
         this.setState({select: !this.state.select});
-        this.changeSelect(this.props.id);
+        this.changeSelect(this.props.cartid);
     }
 
     handleChange = (e) =>{
         this.setState({[e.target.name]:e.target.value})
-        this.changeAmount(this.props.id, e.target.value)
+        this.changeAmount(this.props.cartid, e.target.value)
         console.log(e.target.name)
     }
 
     handleDelete = () => {
-        this.props.deleteBook(this.props.id);
+        this.props.deleteBook(this.props.cartid);
     }
 
     handleEdit = () => {
@@ -52,8 +55,32 @@ class CartRow extends Component{
 
     handleSubmit = (e) =>{
         e.preventDefault();
-        if (this.state.amount!=="")
-            this.setState({edit:false});
+        if (this.state.amount!==""){
+            let data = "bookid="+encodeURIComponent(this.state.bookid)+
+                    "&count="+encodeURIComponent(this.state.amount)
+            fetch(proxy+"/user/cart/edit",{
+                method: 'post',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+                  },
+                body: data
+            })
+            .then(res => res.json())
+            .then(
+            (result) => {
+                console.log(result)
+                this.setState({edit:false});
+            },
+            (error) => {
+                alert("Edit Failed.")
+                this.setState({
+                    error
+                });
+            }
+            )
+        }
         else{
             const link = document.createElement("a")
             link.onClick = this.handleError()

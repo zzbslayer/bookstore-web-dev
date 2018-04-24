@@ -3,7 +3,10 @@ import Sticky from 'react-stickky';
 import CartRow from './CartRow'
 import { Table, Button } from 'mdbreact'
 import { Link } from 'react-router-dom'
-import { proxy } from '../Global'
+import { proxy } from '../../Global'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies();
 
 let result = []
 
@@ -17,6 +20,11 @@ class Cart extends Component {
     }
 
     initMsg = () => {
+        let login = cookies.get("login")
+        if (login==='null' || login===null || typeof(login)==='undefined'){
+            window.location.href = '/login'
+            return;
+        }
         fetch(proxy+"/user/cart",{
             method: 'get',
             credentials: 'include'
@@ -51,21 +59,22 @@ class Cart extends Component {
         return t.split("").reverse().join("") + "." + r;   
     } 
 
-    changeSelect = (id) =>{
+    changeSelect = (cartid) =>{
         let data = this.state.data
         for (let i in data){
-            if (data[i].cartid===id){
+            if (data[i].cartid===cartid){
                 data[i].select = !data[i].select;
                 break;
             }
         }
         this.setState({data: data})
+        console.log(data)
     }
 
-    changeAmount = (id,amount) =>{
+    changeAmount = (cartid,amount) =>{
         let data = this.state.data
         for (let i in data){
-            if (data[i].cartid===id){
+            if (data[i].cartid===cartid){
                 data[i].amount = amount;
                 break;
             }
@@ -73,8 +82,8 @@ class Cart extends Component {
         this.setState({data: data})
     }
 
-    deleteOneBook = (id) => {
-        let msg = "cartid="+encodeURIComponent(id)
+    deleteOneBook = (cartid) => {
+        let msg = "cartid="+encodeURIComponent(cartid)
         fetch(proxy+"/user/cart/delete",{
             method: 'post',
             credentials: 'include',
@@ -85,24 +94,21 @@ class Cart extends Component {
             body: msg
         })
         for (let i in result){
-            if (result[i].cartid===id){
+            if (result[i].cartid===cartid){
                 result.splice(i,1);
                 break;
             }
         }
     }
 
-    deleteBook = (id) => {
+    deleteBook = (cartid) => {
         result = this.state.data
-        console.log(result)
-        this.deleteOneBook(id);
-        console.log(result)
+        this.deleteOneBook(cartid);
         this.setState({data:result});
     }
 
-    getSum = () => {
+    getSum = (data) => {
         let sum = 0
-        let data = this.state.data
         console.log(data)
         for (let i in data){
             let book = data[i]
@@ -113,9 +119,8 @@ class Cart extends Component {
         return this.fmoney(sum)
     }
 
-    getSelectNum = () =>{
+    getSelectNum = (data) =>{
         let num = 0;
-        let data = this.state.data
         for (let i in data){
             if (data[i].select){
                 num ++
@@ -141,8 +146,8 @@ class Cart extends Component {
 
     render(){
         let data = this.state.data
-        let num = this.getSelectNum()
-        let sum = "￥" + this.getSum()
+        let num = this.getSelectNum(data)
+        let sum = "￥" + this.getSum(data)
         return(
             <div className="big-container">
                 <Sticky className="stickyStyle" stickyWidth="1100px">
@@ -189,9 +194,9 @@ class Cart extends Component {
                     </thead>
                     <tbody>
                         {
-                            data==null?(<tr/>):(
+                            (data===null||typeof(data)==='undefined')?(<tr/>):(
                            data.map( (book) => {
-                            return <CartRow key={book.cartid} id={book.cartid} bookname={book.bookname} href={"/books/"+book.bookid} imgsrc={book.imgsrc} price={book.price} amount={book.count} select={book.select} deleteBook={this.deleteBook} changeAmount={this.changeAmount} changeSelect={this.changeSelect}/>
+                            return <CartRow key={book.cartid} cartid={book.cartid} bookid={book.bookid} bookname={book.bookname} href={"/books/"+book.bookid} imgsrc={book.imgsrc} price={book.price} amount={book.count} select={book.select} deleteBook={this.deleteBook} changeAmount={this.changeAmount} changeSelect={this.changeSelect}/>
                         },this))
                         }
                     </tbody>

@@ -44,6 +44,16 @@ class MyNavBar extends Component{
             dropdownOpen: !this.state.dropdownOpen
         });
     }
+
+    isAdmin = (role) => {
+        console.log(role)
+        for (let i in role){
+            if (role[i]==='ROLE_ADMIN')
+                return true
+        }
+        return false
+    }
+
     render(){
         let login = this.props.login
         let username = this.props.username
@@ -77,7 +87,7 @@ class MyNavBar extends Component{
                         </NavItem>
                         </NavbarNav>
                         {
-                            (login==='null'||typeof login === 'undefined')?(
+                            (login==='null'||typeof login === 'undefined'||login===null||login===false)?(
                             <NavbarNav right>
                             <NavItem style={{width:95}}>
                             <NavLink className="nav-link" to="/login"><i className="fa fa-sign-in" aria-hidden="true"></i>Log in</NavLink>
@@ -87,7 +97,7 @@ class MyNavBar extends Component{
                             </NavItem>
                             </NavbarNav>
                             ):
-                            (role.includes('ROLE_ADMIN')?(
+                            (this.isAdmin(role)?(
                                 <NavbarNav right>
                                 <NavItem style={{width:110}}>
                                     <Dropdown isOpen={this.state.dropdownOpen2} toggle={this.toggle2}>
@@ -105,7 +115,7 @@ class MyNavBar extends Component{
                                         <DropdownItem href="/user/profile"><i className="fa fa-user-circle" aria-hidden="true"></i>&nbsp;Profile</DropdownItem>
                                         <DropdownItem href="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;My Cart</DropdownItem>
                                         <DropdownItem href="/order"><i className="fa fa-sticky-note-o" aria-hidden="true"></i>&nbsp;My Order</DropdownItem>
-                                        <DropdownItem href="#" onClick={this.logout}><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
+                                        <DropdownItem href="#" onClick={this.logout}><i className="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</DropdownItem>
                                     </DropdownMenu>
                                     </Dropdown>
                                 </NavItem>

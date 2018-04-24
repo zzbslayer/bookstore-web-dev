@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import UserRow from './UserRow'
 import { proxy } from '../../Global'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 class UserManagement extends Component{
     constructor(props){
@@ -14,6 +17,8 @@ class UserManagement extends Component{
     }
 
     initMsg = () => {
+        if (cookies.get('JSESSIONID')==='null')
+            window.location.href= "/login"
         fetch(proxy + "/admin/userstatus",{
             credentials: 'include',
             method:'get'
@@ -37,6 +42,17 @@ class UserManagement extends Component{
         )
     }
 
+    deleteUser = (username) => {
+        let data = this.state.userstatus
+        for (let i in data){
+            if (data[i].username===username){
+                data.splice(i,1)
+                this.setState({userstatus: data})
+                return
+            }
+        }
+    }
+
     render(){
         let data = this.state.userstatus
         return(
@@ -54,7 +70,7 @@ class UserManagement extends Component{
                     {
                         data.map((user) => {
                             return(
-                                <UserRow  username={user.username} status={user.userStatus}/>
+                                <UserRow  deleteUser={this.deleteUser} key={user.statusid} username={user.username} status={user.userStatus}/>
                             );
                         },this)
                     }

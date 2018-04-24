@@ -44,17 +44,17 @@ class SearchBar extends Component{
                 <tr>
                 <td><div className="BarTitle">Bookname: </div></td>
                 <td>
-                    <input class="form-control form-control-sm" type="text" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
+                    <input className="form-control form-control-sm" type="text" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td><div className="BarTitle">Author: </div></td>
                 <td>
-                    <input class="form-control form-control-sm" type="text" placeholder="Author" onChange={this.handleChange} name="author"/>
+                    <input className="form-control form-control-sm" type="text" placeholder="Author" onChange={this.handleChange} name="author"/>
                 </td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td><div className="BarTitle">Language: </div></td>
                 <td>
-                <input class="form-control form-control-sm" type="text" placeholder="Language" onChange={this.handleChange} name="lang"/>
+                <input className="form-control form-control-sm" type="text" placeholder="Language" onChange={this.handleChange} name="lang"/>
                 </td>
                 </tr> 
             </tbody>
@@ -64,21 +64,21 @@ class SearchBar extends Component{
             <tr>
                 <td><div className="BarTitle">Price: </div></td>
                 <td>
-                    <input class="form-control form-control-sm" type="text" placeholder="from" onChange={this.handleChange} name="down_price"/>
+                    <input className="form-control form-control-sm" type="number" placeholder="from" onChange={this.handleChange} name="down_price"/>
                 </td>
                 <td>~</td>
                 <td>
-                    <input class="form-control form-control-sm" type="text" placeholder="to" onChange={this.handleChange} name="up_price"/>
+                    <input className="form-control form-control-sm" type="number" placeholder="to" onChange={this.handleChange} name="up_price"/>
                 </td>
                 <td/>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td><div className="BarTitle"> Year: </div></td>
                 <td>
-                <input class="form-control form-control-sm" type="text" placeholder="from" onChange={this.handleChange} name="down_year"/>
+                <input className="form-control form-control-sm" type="number" placeholder="from" onChange={this.handleChange} name="down_year"/>
                 </td>
                 <td>~</td>
                 <td>
-                <input class="form-control form-control-sm" type="text" placeholder="to" onChange={this.handleChange} name="up_year"/>
+                <input className="form-control form-control-sm" type="number" placeholder="to" onChange={this.handleChange} name="up_year"/>
                 </td>
                 <td>
                     <Button color="primary" type="submit" onClick={this.handleSubmit}>Search</Button>
