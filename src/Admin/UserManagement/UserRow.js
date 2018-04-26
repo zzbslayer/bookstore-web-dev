@@ -57,8 +57,24 @@ class UserRow extends Component{
     }
 
     handleDelete = () => {
-        console.log("This is delete")
-        
+        fetch(proxy + "/admin/userstatus/delete",{
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+            body: "username="+encodeURIComponent(this.state.username)
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            console.log(result)
+        },
+        (error) => {
+            console.log(error)
+            }
+        )
         this.props.deleteUser(this.state.username)
     }
 
