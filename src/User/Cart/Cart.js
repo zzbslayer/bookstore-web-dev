@@ -5,6 +5,7 @@ import { Table, Button } from 'mdbreact'
 import { Link } from 'react-router-dom'
 import { proxy } from '../../Global'
 import Cookies from 'universal-cookie'
+import { message } from 'antd'
 
 const cookies = new Cookies();
 
@@ -35,12 +36,9 @@ class Cart extends Component {
             this.setState({
                 data: result
             });
-            console.log(result)
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error(error)
             }
         )
     }
@@ -68,7 +66,6 @@ class Cart extends Component {
             }
         }
         this.setState({data: data})
-        console.log(data)
     }
 
     changeAmount = (cartid,amount) =>{
@@ -109,7 +106,6 @@ class Cart extends Component {
 
     getSum = (data) => {
         let sum = 0
-        console.log(data)
         for (let i in data){
             let book = data[i]
             if (book.select)

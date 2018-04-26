@@ -3,6 +3,7 @@ import AddressRow from './AddressRow'
 import { Button } from 'mdbreact'
 import { proxy } from '../Global'
 import Cookies from 'universal-cookie'
+import { message } from 'antd'
 
 const cookies = new Cookies();
 
@@ -29,7 +30,6 @@ class CheckOrder extends Component {
         .then(res => res.json())
         .then(
             (result)=>{
-                console.log(result)
                 for (let i in result){
                     if (i===0)
                         result[i].select = true
@@ -40,9 +40,7 @@ class CheckOrder extends Component {
             }
         ),
         (error) => {
-            this.setState({
-                error
-            });
+            message.error(error)
         }
     }
 
@@ -79,8 +77,6 @@ class CheckOrder extends Component {
                 {
                     data===null?(<tr/>):
                     data.map((address) => {
-                       console.log(address.recipient)
-                       console.log(address.select)
                         return(
                             <AddressRow key={address.addressid} id={address.addressid} address={address.shippingaddress} recipient={address.recipient} phone={address.phone} select={address.select} addressSelect={this.addressSelect}/>
                         )

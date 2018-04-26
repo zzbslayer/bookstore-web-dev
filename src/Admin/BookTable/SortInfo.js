@@ -14,12 +14,10 @@ class SortInfo extends React.Component{
     }
     handleSortChange = (newValue) => {
         this.setState({sort:newValue})
-        console.log(this.state.sort)
     }
 
     handleOrderChange = (newValue) => {
         this.setState({order:newValue})
-        console.log(this.state.order)
     }
 
     handleSubmit(e){
@@ -32,7 +30,7 @@ class SortInfo extends React.Component{
         const sort = this.state.sort
         const order = this.state.order
         return (
-            <div className="SortInfo">
+            <div className="SortInfo"style={{width:730}}>
             <h2>Sort Books</h2>
             <table>
             <tbody>

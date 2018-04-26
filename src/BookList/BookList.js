@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem } from 'mdbreact'
 import SearchBar from './SearchBar'
 import {proxy, categories} from '../Global'
 import BookDetail from './BookDetail'
+import {message} from 'antd'
 
 
 let bookid = []
@@ -44,7 +45,7 @@ class BookList extends Component{
             this.setState({books: result})
         },
         (error) => {
-            console.log("Search error:")
+            message.error("Search error:"+error)
             }
         )
     }
@@ -66,7 +67,7 @@ class BookList extends Component{
             this.setState({books: result})
         },
         (error) => {
-            console.log("Search error:")
+            message.error("Search error:"+error)
             }
         )
     }
@@ -82,7 +83,7 @@ class BookList extends Component{
                 this.setState({books: result})
             },
             (error) => {
-                console.log("fetchAllBooks() error:")
+                message.error("Search error:"+error)
             }
         )
     }
@@ -100,6 +101,9 @@ class BookList extends Component{
                     bookid.push(book.bookid)
                 })
                 this.setState({books: result})
+            },
+            (error) => {
+                message.error("Search error:"+error)
             }
         )
     }

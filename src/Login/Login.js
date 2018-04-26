@@ -10,7 +10,6 @@ class Login extends Component {
 
     constructor(props){
         super(props)
-        console.log(this.props)
         this.handleLogin = props.handleLogin
         this.state={
             username:'',
@@ -23,7 +22,6 @@ class Login extends Component {
 
     handleChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
-        console.log(this.state)
     }
 
     handleKeyDown = (e) => {
@@ -41,7 +39,6 @@ class Login extends Component {
             return
         }
         let data = "username="+ encodeURIComponent(username) +"&password="+encodeURIComponent(password)
-        console.log("data:"+data)
         fetch(proxy+"/login", {
             method: 'post',
             credentials: 'include',
@@ -57,8 +54,6 @@ class Login extends Component {
             //eslint-disable-next-line            
             if (result.user.username==this.state.username){
                 message.success('Login Success!')
-                console.log(result.user)
-                console.log(result.user.avatar)
                 this.handleLogin(result.user.username, result.role, result.user.avatar)
             }
             else

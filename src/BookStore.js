@@ -15,6 +15,7 @@ import Order from './User/Order/Order'
 import Profile from './User/Profile/Profile'
 import Cookies from 'universal-cookie'
 import {proxy} from './Global'
+import {message} from 'antd'
 
 const cookies = new Cookies();
 
@@ -36,7 +37,6 @@ class BookStore extends React.Component{
         
     }
 
-    
 
     handleLogin = (username, role, avatar) => {
         cookies.set("login",true,{path : '/'})
@@ -70,7 +70,7 @@ class BookStore extends React.Component{
             window.location.href = "/";
         },
         (error) => {
-            console.log("Logout error:")
+            message.error("Logout error:"+error)
             }
         )
     }
@@ -98,7 +98,7 @@ class BookStore extends React.Component{
             this.setState({avatar:result.avatar})
         },
         (error) => {
-            console.log("Avatar error:")
+            message.error("Avatar error:"+error)
             }
         )
     }

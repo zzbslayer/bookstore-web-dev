@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button} from 'mdbreact'
 import { proxy } from '../../Global'
+import { message } from 'antd'
 
 class UserRow extends Component{
     constructor(props){
@@ -24,10 +25,10 @@ class UserRow extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
+            message.success("Ban Success")
         },
         (error) => {
-            console.log(error)
+            message.error(error)
             }
         )
         this.setState({status: "BAN"})
@@ -46,13 +47,13 @@ class UserRow extends Component{
         })
         .then(res => res.json())
         .then(
-        (result) => {
-            console.log(result)
-        },
-        (error) => {
-            console.log(error)
-            }
-        )
+            (result) => {
+                message.success("Restore Success")
+            },
+            (error) => {
+                message.error(error)
+                }
+            )
         this.setState({status: "NORMAL"})
     }
 
@@ -68,13 +69,13 @@ class UserRow extends Component{
         })
         .then(res => res.json())
         .then(
-        (result) => {
-            console.log(result)
-        },
-        (error) => {
-            console.log(error)
-            }
-        )
+            (result) => {
+                message.success("Delete Success")
+            },
+            (error) => {
+                message.error(error)
+                }
+            )
         this.props.deleteUser(this.state.username)
     }
 

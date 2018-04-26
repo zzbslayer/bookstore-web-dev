@@ -39,9 +39,7 @@ class Profile extends Component{
 
         reader.onloadend =  () => {
             this.setState({avatar: reader.result});
-        }
-        console.log(reader.result)
-    
+        }    
         return false;
     }
 
@@ -67,7 +65,6 @@ class Profile extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
             this.setState({
                 user: result,
                 email: result.email,
@@ -76,9 +73,7 @@ class Profile extends Component{
             });
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error(error)
             }
         )
     }
@@ -91,15 +86,12 @@ class Profile extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
             this.setState({
                 addresses: result,
             });
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error(error)
             }
         )
     }
@@ -121,16 +113,13 @@ class Profile extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
             message.success("Update Success")
             this.setState({
                 user: result
             });
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error(error)
             }
         )
     }
@@ -142,7 +131,6 @@ class Profile extends Component{
     }
 
     handleChange = (e) => {
-        console.log(this.state)
         this.setState({[e.target.name]:e.target.value})
     }
 
@@ -162,7 +150,6 @@ class Profile extends Component{
         let user = this.state.user
         let action = this.props.match.params.action
         let addresses = this.state.addresses
-        console.log(avatar)
         return(
             <div className="big-container border-solid top-margin">
             <div className="row">

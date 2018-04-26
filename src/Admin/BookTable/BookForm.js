@@ -5,11 +5,13 @@ class BookForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            imgsrc:null,
             bookname:null,
             author:null,
-            language:null,
+            lang:null,
             price:null,
-            year:null
+            year:null,
+            count:null
         }
     }
 
@@ -20,23 +22,19 @@ class BookForm extends React.Component{
     handleSubmit = (e) => {
         e.preventDefault();
         let book = {
-            id: this.props.num,
+            imgsrc: this.state.imgsrc,
             bookname: this.state.bookname,
             author: this.state.author,
-            language: this.state.language,
+            lang: this.state.lang,
             price: this.state.price,
             year: this.state.year,
+            count: this.state.count,
             edit:false
         }
         this.props.addBook(book)
     }
 
     render = () => {
-        let bookname = this.state.bookname;
-        let author = this.state.author;
-        let language = this.state.language;
-        let price = String(this.state.price);
-        let year = String(this.state.year);
         return (
             <div className="BookForm">
             <h2>Add Books</h2>
@@ -44,28 +42,38 @@ class BookForm extends React.Component{
             <tbody>
                 <tr>
                     <td>
-                    <div style={{width:150}}>
-                    <Input type="text" defaultValue={bookname} label="Bookname" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
+                    <div style={{width:200}}>
+                    <Input type="text" label="Imgsrc" placeholder="Bookname" onChange={this.handleChange} name="imgsrc"/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:200}}>
+                    <Input type="text" label="Bookname" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
                     </div>
                     </td>
                     <td>
                     <div style={{width:100}}>
-                    <Input type="text" defaultValue={author} label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
+                    <Input type="text" label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
                     <div style={{width:130}}>
-                    <Input type="text" defaultValue={language} label="Language" placeholder="Language" name="language" onChange={this.handleChange}/>
+                    <Input type="text" label="Language" placeholder="Language" name="lang" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
                     <div style={{width:100}}>
-                    <Input type="number" defaultValue={price} label="Price" placeholder="Price" name="price" onChange={this.handleChange}/>
+                    <Input type="number" label="Price" placeholder="Price" name="price" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
                     <div style={{width:100}}>
-                    <Input type="number" defaultValue={year} label="Year" placeholder="Year" name="year" onChange={this.handleChange}/>
+                    <Input type="number" label="Year" placeholder="Year" name="year" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:100}}>
+                    <Input type="number" label="Inventory" placeholder="Inventory" name="count" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>

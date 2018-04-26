@@ -6,6 +6,7 @@ import SortInfo from './SortInfo'
 import ExportData from './ExportData'
 import Icon from '../../Icon';
 import { proxy } from '../../Global'
+import { message } from 'antd'
 
 let result = []
 
@@ -15,7 +16,6 @@ class BookTable extends React.Component{
         this.state={
             books:[],
             sortInfo:{sort:"bookname",order:"ascend"},
-            num:null
         }
         this.initMsg()
     }
@@ -30,14 +30,10 @@ class BookTable extends React.Component{
         (result) => {
             this.setState({
                 books: result,
-                num: result.length
             });
-            console.log(result)
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error("Netword Error")
             }
         )
     }
@@ -46,20 +42,8 @@ class BookTable extends React.Component{
         this.setState({sortInfo:sortInfo})
         if (sortInfo.sort && sortInfo.order){
             result = this.quickSort(this.state.books, sortInfo.sort, sortInfo.order);
-            console.log(result)
             this.setState({books:result})
         }
-    }
-
-    searchBook = (condition) => {
-        result = []
-        let data = this.state.books
-        for (let i in data){
-            let book = data[i]
-            if (book.bookname.toLowerCase().includes(condition.bookname.toLowerCase()) && book.author.toLowerCase().includes(condition.author.toLowerCase()) && book.language.toLowerCase().includes(condition.language.toLowerCase()))
-                result.push(book)
-        }
-        this.setState({books:result})
     }
 
     quickSortAscend = (arr, attr) =>{
@@ -85,50 +69,99 @@ class BookTable extends React.Component{
             return this.quickSortAscend(arr,attr);
         else if (order === 'descend')
             return this.quickSortAscend(arr, attr).reverse();
-        console.log("Wrong order : "+order);
+        message.error("Wrong order : "+order);
         return null;
     }
 
     
     addBook = (book) => {
         let data = this.state.books
-        data.push(book);
-        this.setState({books:data, num:this.state.num+1});
+
+        let msg = "bookname="+ encodeURIComponent(book.bookname) +
+                "&author="+encodeURIComponent(book.author) +
+                "&lang="+encodeURIComponent(book.lang)+
+                "&price="+encodeURIComponent(book.price)+
+                "&year="+encodeURIComponent(book.year)+
+                "&count="+encodeURIComponent(book.count)+
+                "&imgsrc="+encodeURIComponent(book.imgsrc)
+
+        fetch(proxy+"/admin/books/save", {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+            body: msg
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            data.push(result);
+            message.success("Add Success")
+            this.setState({books:data});
+        },
+        (error) => {
+            message.error("Add Book Error:\n"+error)
+            }
+        )
     }
 
-    deleteBook = (id) => {
+    deleteBook = (bookid) => {
+        fetch(proxy+"/admin/books/delete", {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+            body: "bookid="+encodeURIComponent(bookid)
+        })
         let data = this.state.books
         for (let i in data){
-            if (data[i].id===id){
+            if (data[i].bookid===bookid){
                 data.splice(i,1);
                 break;
             }
         }
+        message.success("Delete Success")
         this.setState({books:data});
+    }
+
+    searchBooks = (searchInfo) => {
+        fetch(proxy+"/books/search", {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+            body: searchInfo
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            this.setState({books: result})
+        },
+        (error) => {
+            message.error("Search error:"+error)
+            }
+        )
     }
 
     render = () => {
         let books = this.state.books;
-        let num = this.state.num;
-        console.log("render:")
-        console.log(books)
         return (
             <div className="big-container">
             <Icon/>
             <div className="FunctionalityBar">
+            <SearchBar searchBooks={this.searchBooks}/>  
+            <BookForm ref="BookForm" addBook={this.addBook}/>
             <table>
             <tbody>
                 <tr>
                     <td>
-                        <BookForm ref="BookForm" num ={num} addBook={this.addBook}/>
-                    </td>
-                    <td>
                         <SortInfo sortBooks={this.sortBooks}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <SearchBar searchBook={this.searchBook}/>  
                     </td> 
                     <td>
                         <ExportData data={books}/>
@@ -143,6 +176,7 @@ class BookTable extends React.Component{
                 <tr>
                     <th>Bookname
                     </th>  
+                    <th/>
                     <th>Author
                     </th>
                     <th>Language
@@ -150,14 +184,16 @@ class BookTable extends React.Component{
                     <th>Price
                     </th>
                     <th>Year
-                    </th>  
+                    </th> 
+                    <th>Inventory
+                    </th> 
                 </tr>
             </thead>
             <tbody>
                 {
                     books===null?<tr/>:
                     books.map( (book) => {
-                        return <BookRow key={book.bookid} bookid={book.bookid} book={book} deleteBook={this.deleteBook}/>
+                        return <BookRow key={book.bookid} book={book} deleteBook={this.deleteBook}/>
                     })
                 }
             </tbody>

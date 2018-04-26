@@ -46,7 +46,6 @@ class MyNavBar extends Component{
     }
 
     isAdmin = (role) => {
-        console.log(role)
         for (let i in role){
             if (role[i]==='ROLE_ADMIN')
                 return true

@@ -1,17 +1,21 @@
-import React from 'react';
-import { Button, Input } from 'mdbreact';
+import React, {Component} from 'react'
+import {Button} from 'mdbreact'
 
-class SearchBar extends React.Component{
+class SearchBar extends Component{
     constructor(props){
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
+        super(props)
+        this.searchBooks = this.props.searchBooks
         this.state={
             bookname:null,
             author:null,
-            language:null,
-            price:null,
-            startYear:null,
-            endYear:null,
+            lang:null,
+
+            up_price:null,
+            down_price:null,
+
+            up_year:null,
+            down_year:null,
+            
         }
     }
 
@@ -21,42 +25,68 @@ class SearchBar extends React.Component{
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let condition = {
-            bookname: this.state.bookname,
-            author: this.state.author,
-            language: this.state.language,
-        }
-        console.log(condition)
-        this.props.searchBook(condition)
+        let searchInfo = "bookname="+encodeURIComponent(this.state.bookname)+
+            "&author="+ encodeURIComponent(this.state.author)+
+            "&lang="+ encodeURIComponent(this.state.lang)+
+            "&down_price="+ encodeURIComponent(this.state.down_price === null ? 0 : this.state.down_price)+
+            "&up_price="+ encodeURIComponent(this.state.up_price === null ? 99999 : this.state.up_price)+
+            "&down_year="+ encodeURIComponent(this.state.down_year === null ? 0 : this.state.down_year)+
+            "&up_year="+ encodeURIComponent(this.state.up_year === null ? 9999 : this.state.up_year)
+        this.searchBooks(searchInfo);
     }
-    render(){
-        return (
-            <div className="SearchBar">
+
+    render = () => {
+        return(
+            <div className="SearchBar-container">
             <h2>Search Books</h2>
             <table>
             <tbody>
                 <tr>
-                    <td>
-                    <div style={{width:150}}>
-                    <Input type="text" label="Bookname" placeholder="Bookname" name="bookname" onChange={this.handleChange}/>
-                    </div>
-                    </td>
-                    <td>
-                    <div style={{width:100}}>
-                    <Input type="text" label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
-                    </div>
-                    </td>
-                    <td>
-                    <div style={{width:130}}>
-                    <Input type="text" label="Language" placeholder="Language" name="language" onChange={this.handleChange}/>
-                    </div>
-                    </td>
-                    <td>
+                <td><div className="BarTitle">Bookname: </div></td>
+                <td>
+                    <input className="form-control form-control-sm" type="text" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td><div className="BarTitle">Author: </div></td>
+                <td>
+                    <input className="form-control form-control-sm" type="text" placeholder="Author" onChange={this.handleChange} name="author"/>
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td><div className="BarTitle">Language: </div></td>
+                <td>
+                <input className="form-control form-control-sm" type="text" placeholder="Language" onChange={this.handleChange} name="lang"/>
+                </td>
+                </tr> 
+            </tbody>
+            </table>
+            <table>
+            <tbody>
+            <tr>
+                <td><div className="BarTitle">Price: </div></td>
+                <td>
+                    <input className="form-control form-control-sm" type="number" placeholder="from" onChange={this.handleChange} name="down_price"/>
+                </td>
+                <td>~</td>
+                <td>
+                    <input className="form-control form-control-sm" type="number" placeholder="to" onChange={this.handleChange} name="up_price"/>
+                </td>
+                <td/>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td><div className="BarTitle"> Year: </div></td>
+                <td>
+                <input className="form-control form-control-sm" type="number" placeholder="from" onChange={this.handleChange} name="down_year"/>
+                </td>
+                <td>~</td>
+                <td>
+                <input className="form-control form-control-sm" type="number" placeholder="to" onChange={this.handleChange} name="up_year"/>
+                </td>
+                <td>
                     <Button color="primary" type="submit" onClick={this.handleSubmit}>Search</Button>
-                    </td>
+                </td>
                 </tr>
             </tbody>
             </table>
+            <hr/>
             </div>
         )
     }

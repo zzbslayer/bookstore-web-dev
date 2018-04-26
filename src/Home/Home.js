@@ -13,14 +13,12 @@ class Home extends Component {
 
     handleSearch = (e) => {
         if (e.keyCode === 13){
-            console.log(this.state.msg)
             window.location.href = "/books/search/"+this.state.msg
         }
     }
 
     handleChange = (e) => {
         this.setState({[e.target.name]:e.target.value})
-        console.log(this.state.msg)
     }
 
     render() {
