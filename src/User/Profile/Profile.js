@@ -5,6 +5,7 @@ import { proxy } from '../../Global'
 import Cookies from 'universal-cookie'
 import AddressRow from './AddressRow';
 import AddressForm from './AddressForm'
+import { Upload, Icon, message } from 'antd'
 
 const cookies = new Cookies();
 
@@ -17,10 +18,31 @@ class Profile extends Component{
             user:null,
             addresses:null,
 
+            avatar:null,
             email:null,
             phone:null,
-            password:null
         }
+    }
+
+    beforeUpload = (file) => {
+        const isJPG = file.type === 'image/jpeg';
+        if (!isJPG) {
+            message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('Image must smaller than 2MB!');
+        }
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend =  () => {
+            this.setState({avatar: reader.result});
+        }
+        console.log(reader.result)
+    
+        return false;
     }
 
     initMsg = () => {
@@ -33,8 +55,6 @@ class Profile extends Component{
             window.location.href="/user/profile"
             return
         }
-        let username = this.props.username
-        console.log(username)
         this.fetchProfile()
         this.fetchAddress()
     }
@@ -50,8 +70,9 @@ class Profile extends Component{
             console.log(result)
             this.setState({
                 user: result,
-                email: result["email"],
-                phone: result["phone"]
+                email: result.email,
+                phone: result.phone,
+                avatar: result.avatar
             });
         },
         (error) => {
@@ -86,7 +107,8 @@ class Profile extends Component{
     handleUpdate = (e) => {
         e.preventDefault();
         let data="email="+encodeURIComponent(this.state.email)+
-                "&phone="+encodeURIComponent(this.state.phone)
+                "&phone="+encodeURIComponent(this.state.phone)+
+                "&avatar="+encodeURIComponent(this.state.avatar)
         fetch(proxy+"/user/profile/update",{
             method: 'post',
             credentials: 'include',
@@ -100,7 +122,7 @@ class Profile extends Component{
         .then(
         (result) => {
             console.log(result)
-            alert("Update Success!")
+            message.success("Update Success")
             this.setState({
                 user: result
             });
@@ -135,11 +157,12 @@ class Profile extends Component{
         this.setState({addresses:data});
     }
 
-
     render = () => {
+        const avatar = this.state.avatar;
         let user = this.state.user
         let action = this.props.match.params.action
         let addresses = this.state.addresses
+        console.log(avatar)
         return(
             <div className="big-container border-solid top-margin">
             <div className="row">
@@ -170,12 +193,18 @@ class Profile extends Component{
                                         <tr>
                                             <td>Photo:</td>
                                             <td>
-                                                <div>
-                                                    <img className="photo border-solid" style={{padding:5}} src="https://s1.piq.land/2013/04/10/3Ta2bg6CVbEgzFrnUVejzVyz_400x400.png" alt="userphoto"/>
-                                                </div>
-                                                <div className="to-the-bottom">
-                                                    <Button color="primary" size="sm">Upload</Button>
-                                                </div>
+                                            <Upload
+                                                className="avatar-uploader"
+                                                name="avatar"
+                                                showUploadList={false}
+                                                beforeUpload={this.beforeUpload}
+                                            >
+                                            {
+                                              (avatar && avatar!=='null') ?
+                                                <img src={avatar} alt={user.username+".jpg"} className="avatar" /> :
+                                                <Icon type="plus" className="avatar-uploader-trigger" />
+                                            }
+                                            </Upload>
                                             </td>
                                         </tr>
                                         </tbody>

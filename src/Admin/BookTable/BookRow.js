@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Input } from 'mdbreact';
+import { message } from 'antd'
 
 class BookRow extends React.Component{
     constructor(props){
@@ -56,7 +57,9 @@ class BookRow extends React.Component{
         e.preventDefault();
         if (this.state.bookname!=="" && this.state.author!=="" && this.state.lang!=="" && this.state.price!=="" && this.state.year!=="" )
             this.setState({edit:false});
-        else{}
+        else{
+            message.error("Info Cannot Be Empty")
+        }
     }
 
     render(){

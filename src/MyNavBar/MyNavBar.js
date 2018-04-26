@@ -58,6 +58,7 @@ class MyNavBar extends Component{
         let login = this.props.login
         let username = this.props.username
         let role = this.props.role
+        let avatar = this.props.avatar
             return(
                 <div>
                 <Navbar color="indigo" dark expand="md" scrolling>
@@ -67,10 +68,10 @@ class MyNavBar extends Component{
                     { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                     <Collapse isOpen = { this.state.collapse } navbar>
                         <NavbarNav className="ml-auto">
-                        <NavItem active>
+                        <NavItem active={window.location.href==="/"}>
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </NavItem>
-                        <NavItem>
+                        <NavItem active={window.location.href.startsWith("/books")}>
                             <NavLink className="nav-link" to="/books">Books List</NavLink>
                         </NavItem>
                         <NavItem>
@@ -107,6 +108,11 @@ class MyNavBar extends Component{
                                         <DropdownItem href="/usermanagement">UserManagement</DropdownItem>
                                     </DropdownMenu>
                                     </Dropdown>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/user/profile">
+                                    <img src={avatar} style={{width:25,height:25,padding:0,margin:0}} alt="" className="avatar" />
+                                    </NavLink>
                                 </NavItem>
                                 <NavItem style={{width:120}}>
                                     <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>

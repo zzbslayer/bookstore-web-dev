@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import { Button, Input } from 'mdbreact';
+import React, {Component} from 'react'
+import { Button, Input } from 'mdbreact'
 import { proxy } from '../../Global'
+import { message } from 'antd'
 
 class CartRow extends Component{
     constructor(props){
@@ -70,11 +71,12 @@ class CartRow extends Component{
             .then(res => res.json())
             .then(
             (result) => {
+                message.error("Delete Failed.")
                 console.log(result)
                 this.setState({edit:false});
             },
             (error) => {
-                alert("Edit Failed.")
+                message.error("Edit Failed.")
                 this.setState({
                     error
                 });
@@ -82,9 +84,7 @@ class CartRow extends Component{
             )
         }
         else{
-            const link = document.createElement("a")
-            link.onClick = this.handleError()
-            link.click()
+            message.error("Amount Cannot Be Empty")
         }
     }
 

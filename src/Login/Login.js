@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Button, Input } from 'mdbreact'
 import Cookies from 'universal-cookie'
 import { proxy } from '../Global'
-
+import { message } from 'antd'
 
 let cookies = new Cookies()
 
@@ -34,7 +34,13 @@ class Login extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        let data = "username="+ encodeURIComponent(this.state.username) +"&password="+encodeURIComponent(this.state.password)
+        let username = this.state.username
+        let password = this.state.password
+        if (username===null || password===null){
+            message.error("Info Cannot Be Empty")
+            return
+        }
+        let data = "username="+ encodeURIComponent(username) +"&password="+encodeURIComponent(password)
         console.log("data:"+data)
         fetch(proxy+"/login", {
             method: 'post',
@@ -49,15 +55,17 @@ class Login extends Component {
         .then(
         (result) => {
             //eslint-disable-next-line            
-            if (result["username"]==this.state.username){
-                alert('Login Success!')
-                this.handleLogin(this.state.username,result["role"])
+            if (result.user.username==this.state.username){
+                message.success('Login Success!')
+                console.log(result.user)
+                console.log(result.user.avatar)
+                this.handleLogin(result.user.username, result.role, result.user.avatar)
             }
             else
-                alert("Login error:\nMessage mismatched")
+                message.error("Login error: Message mismatched")
         },
         (error) => {
-            alert("Login error:\n"+error)
+            message.error("Login error:\n"+error)
             }
         )
     }

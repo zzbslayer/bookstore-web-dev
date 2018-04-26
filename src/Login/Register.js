@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Input } from 'mdbreact';
 import { proxy } from '../Global'
+import { message } from 'antd'
 
 class Register extends Component {
     constructor(props){
@@ -19,10 +20,18 @@ class Register extends Component {
 
     handleRegister = (e) => {
         e.preventDefault();
-        let data = "username="+encodeURIComponent(this.state.username)+
-            "&password="+encodeURIComponent(this.state.password)+
-            "&email="+encodeURIComponent(this.state.email)+
-            "&phone="+encodeURIComponent(this.state.phone)
+        let username = this.state.username
+        let password = this.state.password
+        let email = this.state.email
+        let phone = this.state.phone
+        if (username===null || password===null || email===null || phone===null){
+            message.error("Info Cannot Be Empty")
+            return
+        }
+        let data = "username="+encodeURIComponent(username)+
+            "&password="+encodeURIComponent(password)+
+            "&email="+encodeURIComponent(email)+
+            "&phone="+encodeURIComponent(phone)
 
         fetch(proxy+"/register",{
             method: 'post',
@@ -38,7 +47,7 @@ class Register extends Component {
         (result) => {
             //eslint-disable-next-line 
             if (result.username==this.state.username){
-                alert("Register Success!")
+                message.success("Register Success!")
                 window.location.href= "/login"
             }
             

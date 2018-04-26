@@ -21,6 +21,7 @@ const cookies = new Cookies();
 class BookStore extends React.Component{
     constructor(props){
         super(props)
+        this.fetchAvatar()
         if (cookies.get('JSESSIONID')==='null'){
             cookies.remove("login")
             cookies.remove("username")
@@ -37,19 +38,21 @@ class BookStore extends React.Component{
 
     
 
-    handleLogin = (username,role) => {
+    handleLogin = (username, role, avatar) => {
         cookies.set("login",true,{path : '/'})
         cookies.set("role",role,{path : '/'})
         cookies.set("username",username,{path : '/'})
         this.setState({username: username,
                         role:role,
+                        avatar:avatar,
                         login:true,
         })
-        window.location.href = "/";
+        //window.location.href = "/";
     }
 
     handleLogout = () => {
         fetch(proxy + "/logout",{
+            method: 'get',
             credentials: 'include'
         })
         .then(res => res.json())
@@ -83,15 +86,33 @@ class BookStore extends React.Component{
             dropdownOpen: !this.state.dropdownOpen
         });
     }
+
+    fetchAvatar = () => {
+        fetch(proxy+"/user/profile",{
+            method: 'get',
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            this.setState({avatar:result.avatar})
+        },
+        (error) => {
+            console.log("Avatar error:")
+            }
+        )
+    }
+
     render(){
         let login = this.state.login
         let role = this.state.role
         let username = this.state.username
+        let avatar = this.state.avatar
         return (
             <div className="BookStore">
             <Router>
             <div>
-            <MyNavBar login={login} role={role} username={username} handleLogout={this.handleLogout}/>
+            <MyNavBar login={login} role={role} username={username} avatar={avatar} handleLogout={this.handleLogout}/>
             <Route exact path="/books" component={BookList}/>
 
             <Route exact path="/books/:action/:msg" component={BookList}/>

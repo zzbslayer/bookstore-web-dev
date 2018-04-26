@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Icon from '../Icon';
 import { Input, Button } from 'mdbreact';
 import { proxy } from '../Global'
+import { message } from 'antd'
 import Cookies from 'universal-cookie'
 
 const cookies = new Cookies();
@@ -73,10 +74,10 @@ class BookDetail extends Component{
         .then(
         (result) => {
             console.log(result)
-            alert("Add Success!")
+            message.success("Add Success!")
         },
         (error) => {
-            alert("Add Failed.")
+            message.error("Add Failed.")
             this.setState({
                 error
             });
