@@ -1,5 +1,4 @@
 import React , { Component }from 'react'
-import {Button} from 'mdbreact'
 
 class OrderRow extends Component {
     fmoney = (s, n=2) => {
@@ -20,13 +19,12 @@ class OrderRow extends Component {
         let sum = this.fmoney(this.props.price * 100  * this.props.amount /100)
         return(
             <tr>
-                <td><div style={{width:80}}><img src={this.props.imgsrc} className="small-img" alt={this.props.bookname}/></div></td>
-                <td><div style={{width:120}}>{this.props.bookname}</div></td>
-                <td><div style={{width:180}}>{this.props.address}</div></td>
-                <td><div>{this.props.recipient}</div></td>
-                <td><div>{this.props.phone}</div></td>
-                <td><div>￥{this.props.price}*{this.props.amount}=￥{sum}</div></td>
-                <td><div><Button color="primary" size="sm">Action</Button></div></td>
+                <td/>
+                <td><a href={"/books/bookid/"+this.props.bookid}><img src={this.props.imgsrc} className="small-img" alt={this.props.bookname}/></a></td>
+                <td><a href={"/books/bookid/"+this.props.bookid}>{this.props.bookname}</a></td>
+                <td><div className="bold">￥{this.props.price}</div></td>
+                <td>{this.props.amount}</td>
+                <td><div className="bold price">￥{sum}</div></td>
             </tr>
         );
     }

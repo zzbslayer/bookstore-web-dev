@@ -8,10 +8,10 @@ import Cookies from 'universal-cookie'
 const cookies = new Cookies();
 
 let newbooks = [
-    {id:1, bookname:"Inu to Hasami wa Tsukaiyō", href:"/books/1", imgsrc:"https://images-cn.ssl-images-amazon.com/images/I/51caLYMFqhL._SX337_BO1,204,203,200_.jpg",price:21.30},
-    {id:3, bookname:"Ore no Kanojo to Osananajimi ga Shyuraba Sugiru", href:"/books/3", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51I6rw416jL._AC_US320_FMwebp_QL65_.jpg",price:55.60},
-    {id:4, bookname:"The Devil is a Part-Timer!", href:"/books/4", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51n+hrNYTYL._AC_US436_QL65_.jpg",price:71.00},
-    {id:5, bookname:"Overlord", href:"/books/5", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51VUcYynY+L._AC_SR320,436_QL65_.jpg",price:74.00}
+    {id:1, bookname:"Inu to Hasami wa Tsukaiyō", href:"/books/bookid/2", imgsrc:"https://images-cn.ssl-images-amazon.com/images/I/51caLYMFqhL._SX337_BO1,204,203,200_.jpg",price:21.30},
+    {id:3, bookname:"Ore no Kanojo to Osananajimi ga Shyuraba Sugiru", href:"/books/bookid/4", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51I6rw416jL._AC_US320_FMwebp_QL65_.jpg",price:55.60},
+    {id:4, bookname:"The Devil is a Part-Timer!", href:"/books/bookid/5", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51n+hrNYTYL._AC_US436_QL65_.jpg",price:71.00},
+    {id:5, bookname:"Overlord", href:"/books/bookid/6", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51VUcYynY+L._AC_SR320,436_QL65_.jpg",price:74.00}
 ]
 
 class BookDetail extends Component{
@@ -61,7 +61,7 @@ class BookDetail extends Component{
         let data = "bookid="+encodeURIComponent(bookid)+
                 "&count="+encodeURIComponent(count)
 
-        fetch(proxy+"/user/cart/add",{
+        fetch(proxy+"/user/cart/save",{
             method: 'post',
             credentials: 'include',
             headers: {
@@ -73,14 +73,10 @@ class BookDetail extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
             message.success("Add Success!")
         },
         (error) => {
-            message.error("Add Failed.")
-            this.setState({
-                error
-            });
+            message.error("Add Error:"+error)
             window.location.href= "/login"
             }
         )
@@ -92,7 +88,10 @@ class BookDetail extends Component{
             window.location.href = '/login'
             return;
         }
-        window.location.href = '/buy'
+        let id = this.state.book.bookid
+        let count = this.state.count
+        let buyinfo = (id+";"+count)
+        window.location.href = "/buy/"+buyinfo
     }
 
     render(){

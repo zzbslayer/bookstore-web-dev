@@ -51,13 +51,12 @@ class Login extends Component {
         .then(res => res.json())
         .then(
         (result) => {
-            //eslint-disable-next-line            
-            if (result.user.username==this.state.username){
-                message.success('Login Success!')
+            if (result.status === 'error')
+                message.error("Login Failed")
+            else{
+                message.success('Login Success')
                 this.handleLogin(result.user.username, result.role, result.user.avatar)
-            }
-            else
-                message.error("Login error: Message mismatched")
+            }   
         },
         (error) => {
             message.error("Login error:\n"+error)

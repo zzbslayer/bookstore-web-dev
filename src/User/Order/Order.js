@@ -1,32 +1,33 @@
 import React , { Component }from 'react'
 import OrderRow from './OrderRow'
 
-let data = [
-    {id:0, address:"Shanghai Minghang District Shanghai Jiao Tong University Dormitory X13",recipient:"Jiansi Wang",phone:"18011111111",bookname:"Wiedźmin", href:"/books/0", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/51fIWZgE3-L._SY484_BO1,204,203,200_.jpg",price:196.00, amount:1},
-    {id:1, address:"Shanghai Minghang District Shanghai Jiao Tong University Dormitory X13",recipient:"Jiansi Wang",phone:"18011111111",bookname:"A Certain Scientific Railgun", href:"/books/7", imgsrc:"https://images-na.ssl-images-amazon.com/images/I/512eq6LtkWL._AC_US436_FMwebp_QL65_.jpg",price:30.00, amount:3},
-]
-
 class Order extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            order:this.props.order,
+        }
+        console.log(this.state.order)
+    }
     render(){
+        let order = this.state.order
         return(
-            <div className="big-container border-solid top-margin">
+            <div>
+            <h5><span className="float-left">{"Orderid: " + order.orderid}</span><span className="float-right">{"Date: "+order.date}</span></h5>
             <table className="table table-striped table-sm" style={{width:1070}}>
-                <thead>
-                    <tr>
-                    <td>Bookname</td>
-                    <td/>
-                    <td>Address</td>
-                    <td>Recipient</td>
-                    <td>Phone</td>
-                    <td>Price</td>
-                    <td>Action</td>
-                    </tr>
-                </thead>
                 <tbody>
+                    <tr>
+                        <td style={{width:130}}>Address Info:</td>
+                        <td style={{width:110}}>{order.address.recipient}</td>
+                        <td style={{width:530}}>{order.address.shippingaddress}</td>
+                        <td style={{width:150}}>{order.address.phone}</td>
+                        <td style={{width:40}}/>
+                        <td style={{width:110}}/>
+                    </tr>
                     {
-                        data.map((order) => {
+                        order.books.map((book,key) => {
                             return(
-                                <OrderRow key={order.id} id={order.id} imgsrc={order.imgsrc} bookname={order.bookname} address={order.address} recipient={order.recipient} phone={order.phone} price={order.price} amount={order.amount}/>
+                                <OrderRow key={key} bookid={book.bookid} imgsrc={book.imgsrc} bookname={book.bookname} price={book.price} amount={book.amount}/>
                             );
                         },this)
                     }

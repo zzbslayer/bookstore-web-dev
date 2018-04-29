@@ -15,7 +15,7 @@ class Cart extends Component {
     constructor(props){
         super(props)
         this.state = {
-            data:null
+            data:null,
         }
         this.initMsg()
     }
@@ -125,6 +125,16 @@ class Cart extends Component {
         return num
     }
 
+    getSelectBook = (data) => {
+        let re = ""
+        for (let i in data){
+            if (data[i].select){
+                re+=data[i].bookid+";"+data[i].count+"&"
+            }
+        }
+        return re.slice(0,-1)
+    }
+
     deleteSelect = () =>{
         let cartid=[]
         let data = this.state.data
@@ -144,6 +154,7 @@ class Cart extends Component {
         let data = this.state.data
         let num = this.getSelectNum(data)
         let sum = "￥" + this.getSum(data)
+        let selectbook = this.getSelectBook(data)
         return(
             <div className="big-container">
                 <Sticky className="stickyStyle" stickyWidth="1100px">
@@ -159,7 +170,7 @@ class Cart extends Component {
                             &nbsp;&nbsp;
                             <span>Sum:</span><span className="price">{sum}</span>
                             &nbsp;&nbsp;
-                            <Link to="/buy"><Button color="amber">Buy it now</Button></Link>
+                            <Link to={"/buy/"+ selectbook}><Button color="amber">Buy it now</Button></Link>
                             </div>
                             </div>
                 </Sticky>

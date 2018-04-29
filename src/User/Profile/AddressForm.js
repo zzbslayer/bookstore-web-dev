@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Input } from 'mdbreact';
 import { proxy } from '../../Global'
+import { message } from 'antd'
 
 class AddressForm extends React.Component{
     constructor(props){
@@ -33,13 +34,11 @@ class AddressForm extends React.Component{
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result)
+            message.success("Add Success")
             this.props.addAddress(result)
         },
         (error) => {
-            this.setState({
-                error
-            });
+            message.error("Add Error:"+error)
         })
     }
 

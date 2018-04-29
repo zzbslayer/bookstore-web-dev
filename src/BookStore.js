@@ -11,8 +11,8 @@ import Usermanagement from './Admin/UserManagement/UserManagement'
 import BookTable from './Admin/BookTable/BookTable'
 
 import Cart from './User/Cart/Cart'
-import Order from './User/Order/Order'
-import Profile from './User/Profile/Profile'
+import OrderList from './User/Order/OrderList'
+import ProfileContainer from './User/Profile/ProfileContainer'
 import Cookies from 'universal-cookie'
 import {proxy} from './Global'
 import {message} from 'antd'
@@ -22,21 +22,27 @@ const cookies = new Cookies();
 class BookStore extends React.Component{
     constructor(props){
         super(props)
-        this.fetchAvatar()
-        if (cookies.get('JSESSIONID')==='null'){
-            cookies.remove("login")
-            cookies.remove("username")
-            cookies.remove("role")
-        }
-
         this.state = {
             login: cookies.get('login'),
             role: cookies.get('role'),
             username: cookies.get('username'),
+            avatar:null
+        }
+        if (this.state.login==='null' || this.state.login===null || typeof(this.state.login)==='undefined'){
+            cookies.remove("login")
+            cookies.remove("username")
+            cookies.remove("role")
+        }
+        else{
+            this.fetchAvatar()
         }
         
     }
 
+    updateAvatar = (avatar) => {
+        this.setState({avatar: avatar})
+        console.log(avatar)
+    }
 
     handleLogin = (username, role, avatar) => {
         cookies.set("login",true,{path : '/'})
@@ -47,7 +53,7 @@ class BookStore extends React.Component{
                         avatar:avatar,
                         login:true,
         })
-        //window.location.href = "/";
+        window.location.href = "/";
     }
 
     handleLogout = () => {
@@ -121,13 +127,13 @@ class BookStore extends React.Component{
             <Route exact path="/register" component={Register}/>
             <Route exact path="/login" render={ (props) => <Login handleLogin={this.handleLogin} {...props}/> }/>
 
-            <Route exact path="/order" component={Order}/>
-        <Route exact path="/user/:action" render={(props) => <Profile username={username} {...props}/>}/>
+            <Route exact path="/order" component={OrderList}/>
+            <Route exact path="/user/:action" render={(props) => <ProfileContainer username={username} updateAvatar={this.updateAvatar} {...props}/>}/>
 
             <Route exact path="/booktable" component={BookTable}/>
             <Route exact path="/usermanagement" component={Usermanagement}/>
 
-            <Route exact path="/buy" component={CheckOrder}/>
+            <Route path="/buy/:books" component={CheckOrder}/>
             <Route exact path="/cart" component={Cart}/>
             <Route exact path="/" component={Home}/>
             </div>

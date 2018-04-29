@@ -130,6 +130,11 @@ class MyNavBar extends Component{
                                 </NavbarNav>
                             ):(
                                 <NavbarNav right>
+                                    <NavItem>
+                                    <NavLink className="nav-link" to="/user/profile">
+                                    <img src={avatar} style={{width:25,height:25,padding:0,margin:0}} alt="" className="avatar" />
+                                    </NavLink>
+                                    </NavItem>
                                     <NavItem style={{width:120}}>
                                         <Dropdown isOpen={this.state.dropdownOpen3} toggle={this.toggle3}>
                                         <DropdownToggle nav caret>{username}</DropdownToggle>

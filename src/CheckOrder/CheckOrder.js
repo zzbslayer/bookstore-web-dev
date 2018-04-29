@@ -12,9 +12,11 @@ class CheckOrder extends Component {
         super(props)
         this.state = {
             addresses:null,
+            books:this.props.match.params.books,
+            selectaddress:null,
         }
         this.initMsg()
-
+        console.log(this.state.books)
     }
 
     initMsg = () => {
@@ -46,15 +48,54 @@ class CheckOrder extends Component {
 
     addressSelect = (id) =>{
         let addresses = this.state.addresses
+        let addrid = null;
         for (let i in addresses){
             if (addresses[i].addressid!==id){
                 addresses[i].select = false
             }
             else{
                 addresses[i].select = true
+                addrid = addresses[i].addressid
             }
         }
-        this.setState({addresses:addresses})
+        this.setState({addresses:addresses, selectaddress:addrid})
+    }
+
+    addOrder = () => {
+        let addressid = this.state.selectaddress
+        let books = this.state.books
+        let booksinfo = books.split('&')
+        console.log(books)
+        console.log(booksinfo)
+        let msg = ""
+        for (let i in booksinfo){
+            msg += "book="+encodeURIComponent(booksinfo[i])+"&"
+        }
+        msg += "addressid=" + encodeURIComponent(addressid)
+        console.log(msg)
+        fetch(proxy+"/user/order/add/",{
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+              },
+            body: msg,
+        }) 
+        .then(res => res.json())
+        .then(
+            (result)=>{
+                if (result.error)
+                    message.error(result.error + ":" +result.message)
+                else{
+                    message.success("Buy Success!")
+                    window.location.href = "/order"
+                }
+            }
+        ),
+        (error) => {
+            message.error(error)
+        }
     }
 
     render(){
@@ -84,7 +125,7 @@ class CheckOrder extends Component {
                 }
                 </tbody>
             </table>
-            <Button color="deep-orange">Confirm</Button>
+            <Button color="deep-orange" onClick={this.addOrder}>Confirm</Button>
             </div>
             </div>
         );

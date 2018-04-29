@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { proxy } from '../../Global'
 import { Button, Input} from 'mdbreact'
+import { message } from 'antd'
 
 class AddressRow extends Component {
     constructor(props){
-        console.log("constructor:")
         super(props)
         this.deleteAddress = this.props.deleteAddress
         this.addressSelect = this.props.addressSelect
@@ -21,7 +21,6 @@ class AddressRow extends Component {
             old_recipient:this.props.recipient,
             old_phone:this.props.phone,
         }
-        console.log(this.state)
     }
 
     handleDelete = () => {
@@ -36,6 +35,15 @@ class AddressRow extends Component {
               },
             body: data
         })
+        .then(
+            (result) => {
+                message.success("Delete Success")
+            },
+            (error) => {
+                message.error("Delete Error:"+error)
+            }
+        )
+        
     }
 
     handleEdit = () => {
@@ -71,19 +79,19 @@ class AddressRow extends Component {
             .then(res => res.json())
             .then(
             (result) => {
-                console.log(result)
+                message.success("Edit Success")
                 this.setState({
                     edit:false,    
                 });
             },
             (error) => {
-                this.setState({
-                    error
-                });
+                message.error("Edit Error:"+error)
                 }
             )
         }
-        else{}
+        else{
+            message.error("Info Invalid")
+        }
     }
 
 
@@ -92,8 +100,6 @@ class AddressRow extends Component {
         let address = this.state.address
         let recipient = this.state.recipient
         let phone = this.state.phone
-        console.log("address:")
-        console.log(this.state)
         if (!edit){
             return(
                 <tr>
@@ -116,13 +122,19 @@ class AddressRow extends Component {
             return(
                 <tr>
                     <td>
+                    <div style={{width:330}}>
                     <Input type="text" defaultValue={address} placeholder="Address" onChange={this.handleChange} name="address"/>
+                    </div>
                     </td> 
                     <td>
+                    <div style={{width:120}}>
                     <Input type="text" defaultValue={recipient} placeholder="Recipient" name="recipient" onChange={this.handleChange}/>
+                    </div>
                     </td> 
                     <td>
+                    <div style={{width:120}}>
                     <Input type="number" defaultValue={phone} placeholder="Phone" name="phone" onChange={this.handleChange}/>
+                    </div>
                     </td> 
                     
                     <td className = 'action'>
