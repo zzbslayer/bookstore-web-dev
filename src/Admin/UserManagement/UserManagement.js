@@ -12,14 +12,14 @@ class UserManagement extends Component{
         this.state={
             error:null,
             isLoaded: false,
-            userstatus: []
+            users: []
         }
     }
 
     initMsg = () => {
         if (cookies.get('JSESSIONID')==='null')
             window.location.href= "/login"
-        fetch(proxy + "/admin/userstatus",{
+        fetch(proxy + "/admin/users/",{
             credentials: 'include',
             method:'get'
         })
@@ -28,16 +28,16 @@ class UserManagement extends Component{
         (result) => {
             this.setState({
                 isLoaded: true,
-                userstatus: result
+                users: result
             });
-            console.log(result)
+            //console.log(result)
         },
         (error) => {
             this.setState({
                 isLoaded: true,
                 error
             });
-            console.log(error)
+            //console.log(error)
             }
         )
     }
@@ -54,7 +54,7 @@ class UserManagement extends Component{
     }
 
     render(){
-        let data = this.state.userstatus
+        let data = this.state.users
         return(
             <div className="big-container">
             <table className="table table-striped table-sm inside-big-container">
@@ -68,9 +68,11 @@ class UserManagement extends Component{
                 </thead>
                 <tbody>
                     {
-                        data.map((user) => {
+
+                        (data===null || typeof(data)==='undefined')?<tr><td/><td/><td/><td/></tr>:data.map((user) => {
+                            //console.log(user.rolename)
                             return(
-                                <UserRow  deleteUser={this.deleteUser} key={user.statusid} username={user.username} status={user.userStatus}/>
+                                <UserRow  deleteUser={this.deleteUser} key={user.userid} username={user.username} status={user.status} rolename={user.rolename}/>
                             );
                         },this)
                     }

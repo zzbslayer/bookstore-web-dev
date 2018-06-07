@@ -13,7 +13,7 @@ class UserRow extends Component{
     }
 
     handleBan = () => {
-        fetch(proxy + "/admin/userstatus/ban",{
+        fetch(proxy + "/admin/users/ban",{
             method: 'post',
             credentials: 'include',
             headers: {
@@ -25,7 +25,10 @@ class UserRow extends Component{
         .then(res => res.json())
         .then(
         (result) => {
-            message.success("Ban Success")
+            if (result.status === "BAN")
+                message.success("Ban Success")
+            else
+                message.error(result.message)
         },
         (error) => {
             message.error(error)
@@ -36,7 +39,7 @@ class UserRow extends Component{
 
     handleRestore = () => {
 
-        fetch(proxy + "/admin/userstatus/restore",{
+        fetch(proxy + "/admin/users/restore",{
             method: 'post',
             credentials: 'include',
             headers: {
@@ -48,7 +51,10 @@ class UserRow extends Component{
         .then(res => res.json())
         .then(
             (result) => {
-                message.success("Restore Success")
+                if (result.status === "NORMAL")
+                    message.success("Restore Success")
+                else
+                    message.error(result.message)
             },
             (error) => {
                 message.error(error)
@@ -58,7 +64,7 @@ class UserRow extends Component{
     }
 
     handleDelete = () => {
-        fetch(proxy + "/admin/userstatus/delete",{
+        fetch(proxy + "/admin/users/delete",{
             method: 'post',
             credentials: 'include',
             headers: {
@@ -70,7 +76,10 @@ class UserRow extends Component{
         .then(res => res.json())
         .then(
             (result) => {
-                message.success("Delete Success")
+                if (result.status === null)
+                    message.success("Delete Success")
+                else
+                    message.error(result.message)
             },
             (error) => {
                 message.error(error)
@@ -82,6 +91,9 @@ class UserRow extends Component{
     render = () => {
         let username = this.state.username
         let status = this.state.status
+        let rolename = this.props.rolename
+        if (rolename === 'ADMIN')
+            return(null)
         if (status==="NORMAL"){
             return(
                 <tr>

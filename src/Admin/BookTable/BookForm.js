@@ -11,7 +11,8 @@ class BookForm extends React.Component{
             lang:null,
             price:null,
             year:null,
-            count:null
+            count:null,
+            category:null
         }
     }
 
@@ -29,6 +30,7 @@ class BookForm extends React.Component{
             price: this.state.price,
             year: this.state.year,
             count: this.state.count,
+            category: this.state.category,
             edit:false
         }
         this.props.addBook(book)
@@ -42,37 +44,42 @@ class BookForm extends React.Component{
             <tbody>
                 <tr>
                     <td>
-                    <div style={{width:200}}>
+                    <div style={{width:170}}>
                     <Input type="text" label="Imgsrc" placeholder="Bookname" onChange={this.handleChange} name="imgsrc"/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:200}}>
+                    <div style={{width:180}}>
                     <Input type="text" label="Bookname" placeholder="Bookname" onChange={this.handleChange} name="bookname"/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:100}}>
+                    <div style={{width:90}}>
                     <Input type="text" label="Author" placeholder="Author" name="author" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:130}}>
+                    <div style={{width:120}}>
                     <Input type="text" label="Language" placeholder="Language" name="lang" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
                     <div style={{width:100}}>
+                    <Input type="text" label="Category" placeholder="Category" name="category" onChange={this.handleChange}/>
+                    </div>
+                    </td>
+                    <td>
+                    <div style={{width:90}}>
                     <Input type="number" label="Price" placeholder="Price" name="price" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:100}}>
+                    <div style={{width:90}}>
                     <Input type="number" label="Year" placeholder="Year" name="year" onChange={this.handleChange}/>
                     </div>
                     </td>
                     <td>
-                    <div style={{width:100}}>
+                    <div style={{width:90}}>
                     <Input type="number" label="Inventory" placeholder="Inventory" name="count" onChange={this.handleChange}/>
                     </div>
                     </td>

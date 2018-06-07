@@ -13,7 +13,7 @@ class OrderList extends Component {
     }
 
     fetchOrderlist = () => {
-        fetch(proxy+"/user/order",{
+        fetch(proxy+"/user/order/",{
             method: 'get',
             credentials: 'include'
         })
@@ -34,7 +34,7 @@ class OrderList extends Component {
         let orderlist = this.state.orderlist
         return(
             <div className="big-container border-solid top-margin">
-                    {   orderlist===null?<div/>:
+                    {   orderlist===null || typeof(orderlist)==='undefined'?<div/>:
                         orderlist.reverse().map((order,key) => {
                             return(
                                 <Order key={key} order={order}/>

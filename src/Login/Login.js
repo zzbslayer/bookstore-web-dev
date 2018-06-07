@@ -55,7 +55,7 @@ class Login extends Component {
                 message.error("Login Failed")
             else{
                 message.success('Login Success')
-                this.handleLogin(result.user.username, result.role, result.user.avatar)
+                this.handleLogin(result.user.username, result.user.rolename, result.user.avatar)
             }   
         },
         (error) => {

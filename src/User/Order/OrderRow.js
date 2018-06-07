@@ -16,14 +16,16 @@ class OrderRow extends Component {
     } 
 
     render(){
-        let sum = this.fmoney(this.props.price * 100  * this.props.amount /100)
+        let sum = this.fmoney(this.props.price * 100  * this.props.count /100)
+        console.log("count:"+this.props.count)
+        console.log("price:"+this.props.price)
         return(
             <tr>
                 <td/>
                 <td><a href={"/books/bookid/"+this.props.bookid}><img src={this.props.imgsrc} className="small-img" alt={this.props.bookname}/></a></td>
                 <td><a href={"/books/bookid/"+this.props.bookid}>{this.props.bookname}</a></td>
                 <td><div className="bold">￥{this.props.price}</div></td>
-                <td>{this.props.amount}</td>
+                <td>{this.props.count}</td>
                 <td><div className="bold price">￥{sum}</div></td>
             </tr>
         );

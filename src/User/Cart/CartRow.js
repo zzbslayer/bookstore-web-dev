@@ -9,7 +9,6 @@ class CartRow extends Component{
         this.changeAmount = this.props.changeAmount
         this.changeSelect = this.props.changeSelect
         this.state={
-            cartid: this.props.cartid,
             bookid: this.props.bookid,
             href: this.props.href,
             imgsrc: this.props.imgsrc,
@@ -36,18 +35,18 @@ class CartRow extends Component{
     } 
 
     handleSelect = (e) => {
-        this.setState({select: !this.state.select});
-        this.changeSelect(this.props.cartid);
+        //this.setState({select: !this.state.select});
+        this.changeSelect(this.props.bookid);
     }
 
     handleChange = (e) =>{
         this.setState({[e.target.name]:e.target.value})
-        this.changeAmount(this.props.cartid, e.target.value)
+        this.changeAmount(this.props.bookid, e.target.value)
         console.log(e.target.name)
     }
 
     handleDelete = () => {
-        this.props.deleteBook(this.props.cartid);
+        this.props.deleteBook(this.props.bookid);
     }
 
     handleEdit = () => {
@@ -59,7 +58,7 @@ class CartRow extends Component{
         if (this.state.amount!==""){
             let data = "bookid="+encodeURIComponent(this.state.bookid)+
                     "&count="+encodeURIComponent(this.state.amount)
-            fetch(proxy+"/user/cart/edit",{
+            fetch(proxy+"/user/cart/update",{
                 method: 'post',
                 credentials: 'include',
                 headers: {
@@ -71,7 +70,7 @@ class CartRow extends Component{
             .then(res => res.json())
             .then(
             (result) => {
-                message.error("Delete Failed.")
+                message.success("Edit Success.")
                 console.log(result)
                 this.setState({edit:false});
             },
@@ -99,12 +98,12 @@ class CartRow extends Component{
                 <input type="checkbox" checked={this.state.select} onChange={this.handleSelect}/>
             </td>
             <td>
-                <img src={this.state.imgsrc} alt="imgsrc" className="small-img"/>
+                <a href={this.state.href}><img src={this.state.imgsrc} alt="imgsrc" className="small-img"/></a>
             </td>
             <td>
-                <div className="bold">
+                <a href={this.state.href} className="bold">
                 {this.state.bookname}
-                </div>
+                </a>
             </td>
             <td>
                 <div className="bold">

@@ -26,7 +26,6 @@ class BookDetail extends Component{
 
     initBook = () => {
         let id = this.props.id
-        console.log(id)
         this.fetchBook(id)
     }
 
@@ -100,7 +99,7 @@ class BookDetail extends Component{
         let price = "￥" + book.price
         let count = this.state.count
         let imgsrc = book.imgsrc
-        let href = "/books/"+id
+        let href = "/books/bookid/"+id
         let bookname = book.bookname
         return(
             <div>

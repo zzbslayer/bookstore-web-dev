@@ -97,7 +97,7 @@ class MyNavBar extends Component{
                             </NavItem>
                             </NavbarNav>
                             ):
-                            (this.isAdmin(role)?(
+                            (role === 'ADMIN'?(
                                 <NavbarNav right>
                                 <NavItem style={{width:110}}>
                                     <Dropdown isOpen={this.state.dropdownOpen2} toggle={this.toggle2}>

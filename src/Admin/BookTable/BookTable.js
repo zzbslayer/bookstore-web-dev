@@ -83,7 +83,8 @@ class BookTable extends React.Component{
                 "&price="+encodeURIComponent(book.price)+
                 "&year="+encodeURIComponent(book.year)+
                 "&count="+encodeURIComponent(book.count)+
-                "&imgsrc="+encodeURIComponent(book.imgsrc)
+                "&imgsrc="+encodeURIComponent(book.imgsrc)+
+                "&category="+encodeURIComponent(book.category)
 
         fetch(proxy+"/admin/books/save", {
             method: 'post',

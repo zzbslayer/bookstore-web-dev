@@ -26,7 +26,7 @@ class Cart extends Component {
             window.location.href = '/login'
             return;
         }
-        fetch(proxy+"/user/cart",{
+        fetch(proxy+"/user/cart/",{
             method: 'get',
             credentials: 'include'
         })
@@ -36,6 +36,7 @@ class Cart extends Component {
             this.setState({
                 data: result
             });
+            console.log(result)
         },
         (error) => {
             message.error(error)
@@ -57,10 +58,10 @@ class Cart extends Component {
         return t.split("").reverse().join("") + "." + r;   
     } 
 
-    changeSelect = (cartid) =>{
+    changeSelect = (bookid) =>{
         let data = this.state.data
         for (let i in data){
-            if (data[i].cartid===cartid){
+            if (data[i].bookid===bookid){
                 data[i].select = !data[i].select;
                 break;
             }
@@ -68,10 +69,10 @@ class Cart extends Component {
         this.setState({data: data})
     }
 
-    changeAmount = (cartid,amount) =>{
+    changeAmount = (bookid,amount) =>{
         let data = this.state.data
         for (let i in data){
-            if (data[i].cartid===cartid){
+            if (data[i].bookid===bookid){
                 data[i].amount = amount;
                 break;
             }
@@ -79,8 +80,8 @@ class Cart extends Component {
         this.setState({data: data})
     }
 
-    deleteOneBook = (cartid) => {
-        let msg = "cartid="+encodeURIComponent(cartid)
+    deleteOneBook = (bookid) => {
+        let msg = "bookid="+encodeURIComponent(bookid)
         fetch(proxy+"/user/cart/delete",{
             method: 'post',
             credentials: 'include',
@@ -91,16 +92,16 @@ class Cart extends Component {
             body: msg
         })
         for (let i in result){
-            if (result[i].cartid===cartid){
+            if (result[i].bookid===bookid){
                 result.splice(i,1);
                 break;
             }
         }
     }
 
-    deleteBook = (cartid) => {
+    deleteBook = (bookid) => {
         result = this.state.data
-        this.deleteOneBook(cartid);
+        this.deleteOneBook(bookid);
         this.setState({data:result});
     }
 
@@ -136,16 +137,16 @@ class Cart extends Component {
     }
 
     deleteSelect = () =>{
-        let cartid=[]
+        let bookid=[]
         let data = this.state.data
         for (let i in data){
             if (data[i].select){
-                cartid.push(data[i].cartid)
+                bookid.push(data[i].bookid)
             }
         }
         result = this.state.data
-        for (let j in cartid){
-            this.deleteOneBook(cartid[j])
+        for (let j in bookid){
+            this.deleteOneBook(bookid[j])
         }
         this.setState({data: result})
     }
@@ -203,7 +204,7 @@ class Cart extends Component {
                         {
                             (data===null||typeof(data)==='undefined')?(<tr/>):(
                            data.map( (book) => {
-                            return <CartRow key={book.cartid} cartid={book.cartid} bookid={book.bookid} bookname={book.bookname} href={"/books/"+book.bookid} imgsrc={book.imgsrc} price={book.price} amount={book.count} select={book.select} deleteBook={this.deleteBook} changeAmount={this.changeAmount} changeSelect={this.changeSelect}/>
+                            return <CartRow key={book.bookid} bookid={book.bookid} bookname={book.bookname} href={"/books/bookid/"+book.bookid} imgsrc={book.imgsrc} price={book.price} amount={book.count} select={book.select} deleteBook={this.deleteBook} changeAmount={this.changeAmount} changeSelect={this.changeSelect}/>
                         },this))
                         }
                     </tbody>

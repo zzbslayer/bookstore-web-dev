@@ -35,7 +35,7 @@ class AddressForm extends React.Component{
         .then(
         (result) => {
             message.success("Add Success")
-            this.props.addAddress(result)
+            this.props.updateAddress(result.addresses)
         },
         (error) => {
             message.error("Add Error:"+error)

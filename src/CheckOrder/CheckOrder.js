@@ -25,20 +25,20 @@ class CheckOrder extends Component {
             window.location.href = '/login'
             return;
         }
-        fetch(proxy+"/user/address",{
+        fetch(proxy+"/user/address/",{
             method: 'get',
             credentials: 'include'
         })
         .then(res => res.json())
         .then(
             (result)=>{
-                for (let i in result){
+                for (let i in result.addresses){
                     if (i===0)
-                        result[i].select = true
+                        result.addresses[i].select = true
                     else
-                        result[i].select = false
+                        result.addresses[i].select = false
                 }
-                this.setState({addresses: result})
+                this.setState({addresses: result.addresses})
             }
         ),
         (error) => {
@@ -48,21 +48,25 @@ class CheckOrder extends Component {
 
     addressSelect = (id) =>{
         let addresses = this.state.addresses
-        let addrid = null;
+        let selectaddr = null;
         for (let i in addresses){
             if (addresses[i].addressid!==id){
                 addresses[i].select = false
             }
             else{
                 addresses[i].select = true
-                addrid = addresses[i].addressid
+                selectaddr = addresses[i]
             }
         }
-        this.setState({addresses:addresses, selectaddress:addrid})
+        this.setState({addresses:addresses, selectaddress:selectaddr})
     }
 
     addOrder = () => {
-        let addressid = this.state.selectaddress
+        let address = this.state.selectaddress
+        if (address === null ){
+            message.error("You must choose an address")
+            return;
+        }
         let books = this.state.books
         let booksinfo = books.split('&')
         console.log(books)
@@ -71,9 +75,11 @@ class CheckOrder extends Component {
         for (let i in booksinfo){
             msg += "book="+encodeURIComponent(booksinfo[i])+"&"
         }
-        msg += "addressid=" + encodeURIComponent(addressid)
+        msg += "shippingaddress=" + encodeURIComponent(address.shippingaddress)+"&"
+        msg += "recipient=" + encodeURIComponent(address.recipient)+"&"
+        msg += "phone=" +encodeURIComponent(address.phone) 
         console.log(msg)
-        fetch(proxy+"/user/order/add/",{
+        fetch(proxy+"/user/order/add",{
             method: 'post',
             credentials: 'include',
             headers: {

@@ -17,7 +17,7 @@ class Profile extends Component{
     }
 
     fetchProfile = () => {
-        fetch(proxy+"/user/profile",{
+        fetch(proxy+"/user/profile/",{
             method: 'get',
             credentials: 'include'
         })

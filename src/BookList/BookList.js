@@ -164,7 +164,7 @@ class BookList extends Component{
                         </ListGroup>
                     </div>
                     <div className= "col-8">
-                        <h3>No Books Found</h3>
+                        <h3></h3>
                     </div>
                 </div>
                 </div>

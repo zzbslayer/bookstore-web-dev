@@ -17,15 +17,17 @@ class Address extends Component{
     }
 
     fetchAddress = () => {
-        fetch(proxy+"/user/address",{
+        fetch(proxy+"/user/address/",{
             method: 'get',
             credentials: 'include'
         })
         .then(res => res.json())
         .then(
         (result) => {
+            console.log(result.addresses)
+            console.log(result)
             this.setState({
-                addresses: result,
+                addresses: result.addresses,
             });
         },
         (error) => {
@@ -34,11 +36,9 @@ class Address extends Component{
         )
     }
 
-    addAddress = (addr) => {
+    updateAddress = (addr) => {
         /* send post in the AddressRow */
-        let data = this.state.addresses
-        data.push(addr)
-        this.setState({addresses: data})
+        this.setState({addresses: addr})
     }
 
     deleteAddress = (addressid) => {
@@ -59,6 +59,7 @@ class Address extends Component{
 
     render = () => {
         let addresses = this.state.addresses
+        console.log("addr:"+addresses)
         return (
         <div className="col-8 big-font">
             <table className="table table-striped table-sm">
@@ -73,7 +74,7 @@ class Address extends Component{
                 </thead>
                 <tbody>
                 {
-                    addresses===null?(<tr><td>No address</td><td/><td/><td/></tr>):(
+                    addresses===null || typeof(addresses)==='undefined'?(<tr><td>No address</td><td/><td/><td/></tr>):(
                         addresses.map((address) => {
                             return <AddressRow key={address.addressid} deleteAddress={this.deleteAddress} addressid={address.addressid} address={address.shippingaddress} recipient={address.recipient} phone={address.phone}/>
                         })
@@ -81,7 +82,7 @@ class Address extends Component{
                 }
                 </tbody>
             </table>
-            <AddressForm addAddress={this.addAddress}/>
+            <AddressForm updateAddress={this.updateAddress}/>
         </div>
         )
     }

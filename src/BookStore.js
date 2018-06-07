@@ -32,7 +32,7 @@ class BookStore extends React.Component{
             cookies.remove("login")
             cookies.remove("username")
             cookies.remove("role")
-        }
+        } 
         else{
             this.fetchAvatar()
         }
@@ -41,15 +41,14 @@ class BookStore extends React.Component{
 
     updateAvatar = (avatar) => {
         this.setState({avatar: avatar})
-        console.log(avatar)
     }
 
-    handleLogin = (username, role, avatar) => {
+    handleLogin = (username, rolename, avatar) => {
         cookies.set("login",true,{path : '/'})
-        cookies.set("role",role,{path : '/'})
+        cookies.set("role",rolename,{path : '/'})
         cookies.set("username",username,{path : '/'})
         this.setState({username: username,
-                        role:role,
+                        role:rolename,
                         avatar:avatar,
                         login:true,
         })
@@ -94,7 +93,7 @@ class BookStore extends React.Component{
     }
 
     fetchAvatar = () => {
-        fetch(proxy+"/user/profile",{
+        fetch(proxy+"/user/profile/",{
             method: 'get',
             credentials: 'include'
         })
