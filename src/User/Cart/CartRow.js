@@ -35,7 +35,6 @@ class CartRow extends Component{
     } 
 
     handleSelect = (e) => {
-        //this.setState({select: !this.state.select});
         this.changeSelect(this.props.bookid);
     }
 
