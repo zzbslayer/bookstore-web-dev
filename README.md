@@ -6,7 +6,4 @@ This naive front end version supports following things
 - Pass props in react-router v4 : https://github.com/ReactTraining/react-router/issues/4105
 
 # Todolist
-- To use Antd alert
-- Validation of register
-- upload
-- profile msg
+- Store avatar in local storage
