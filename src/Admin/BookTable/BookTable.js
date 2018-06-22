@@ -187,6 +187,8 @@ class BookTable extends React.Component{
                     <th>Year
                     </th> 
                     <th>Inventory
+                    </th>
+                    <th>Sales
                     </th> 
                 </tr>
             </thead>

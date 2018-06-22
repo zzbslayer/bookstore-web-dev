@@ -17,6 +17,7 @@ class BookRow extends React.Component{
             price:this.props.book.price,
             year:this.props.book.year,
             count:this.props.book.count,
+            sales:this.props.book.sales,
 
             old_imgsrc:this.props.book.imgsrc,
             old_bookname:this.props.book.bookname,
@@ -24,7 +25,8 @@ class BookRow extends React.Component{
             old_lang:this.props.book.lang,
             old_price:this.props.book.price,
             old_year:this.props.book.year,
-            old_count:this.props.book.count
+            old_count:this.props.book.count,
+            old_sales:this.props.book.sales
         }
     }
 
@@ -107,6 +109,7 @@ class BookRow extends React.Component{
         let year = String(this.state.year);
         let edit = this.state.edit;
         let count = String(this.state.count)
+        let sales = String(this.state.sales)
         if (!edit){
             return(
                 <tr>
@@ -117,6 +120,7 @@ class BookRow extends React.Component{
                     <td className = 'price-row align-middle'style={{width:70}}>￥{price}</td>
                     <td className = 'year-row align-middle' style={{width:70}}>{year}</td>
                     <td className = 'inventory-row align-middle' style={{width:80}}>{count}</td>
+                    <td className = 'sales-row align-middle' style={{width:50}}>{sales}</td>
                     <td className = 'action-row'>
                         <div style={{width:135}}>
                         <Button color="primary" onClick = {this.handleEdit}>Edit&nbsp;<i className="fa fa-pencil" aria-hidden="true"></i></Button>
@@ -162,6 +166,7 @@ class BookRow extends React.Component{
                     <Input type="number" defaultValue={count} placeholder="Inventory" name="count" onChange={this.handleChange}/>
                     </div>
                     </td> 
+                    <td/>
                     <td className = 'action'>
                         <div style={{width:150}}>
                         <Button color="primary" onClick = {this.handleSubmit}>Submit&nbsp;<i className="fa fa-check" aria-hidden="true"></i></Button>

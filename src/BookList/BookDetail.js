@@ -101,6 +101,7 @@ class BookDetail extends Component{
         let imgsrc = book.imgsrc
         let href = "/books/bookid/"+id
         let bookname = book.bookname
+        let inventory = book.count
         return(
             <div>
             <Icon/>
@@ -135,6 +136,11 @@ class BookDetail extends Component{
                                     <div className= "description">
                                         <span className="bold">Shipping:</span><span className="price">￥5.00</span>
                                     </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div className="description"><span className="bold">Inventory: </span><span>{inventory}</span></div>
                                     </td>
                                 </tr>
                                 <tr>

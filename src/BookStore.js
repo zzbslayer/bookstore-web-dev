@@ -93,7 +93,7 @@ class BookStore extends React.Component{
     }
 
     fetchAvatar = () => {
-        fetch(proxy+"/user/profile/",{
+        fetch(proxy+"/user/profile/avatar",{
             method: 'get',
             credentials: 'include'
         })
