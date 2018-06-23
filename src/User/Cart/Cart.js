@@ -39,7 +39,7 @@ class Cart extends Component {
             console.log(result)
         },
         (error) => {
-            message.error(error)
+            console.log(error)
             }
         )
     }

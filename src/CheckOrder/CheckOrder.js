@@ -94,6 +94,7 @@ class CheckOrder extends Component {
                 if (result.error)
                     message.error(result.error + ":" +result.message)
                 else{
+                    console.log(result.order)
                     message.success("Buy Success!")
                     window.location.href = "/order"
                 }

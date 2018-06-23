@@ -34,8 +34,12 @@ class AddressForm extends React.Component{
         .then(res => res.json())
         .then(
         (result) => {
-            message.success("Add Success")
-            this.props.updateAddress(result.addresses)
+            if (result.error)
+                message.error("Add Error:"+result.error)
+            else{
+                message.success("Add Success")
+                this.props.updateAddress(result.addresses)
+            }
         },
         (error) => {
             message.error("Add Error:"+error)
